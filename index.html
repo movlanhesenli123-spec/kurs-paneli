@@ -387,11 +387,406 @@ function renderMyRecords(){
 }
 
 function logout(){
+  <!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADDIM KURSU</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;
+  background:#0b1220;color:#edf2ff;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer;border:0}
+header{
+  padding:22px 16px;background:#111c32;
+  border-bottom:1px solid #263650;text-align:center
+}
+.logo{font-size:26px;font-weight:800;color:#60a5fa}
+header p{color:#a8b5cc;margin:8px 0 0}
+.container{width:min(100% - 28px,850px);margin:28px auto}
+.card{
+  background:#121e33;border:1px solid #263650;
+  border-radius:16px;padding:22px;margin-bottom:18px
+}
+h2{margin-top:0;font-size:21px}
+.muted{color:#a8b5cc;font-size:14px}
+label{display:block;margin:14px 0 7px;color:#cbd5e1}
+input,select,textarea{
+  width:100%;padding:12px;border-radius:9px;
+  border:1px solid #34445f;background:#0b1426;
+  color:white;outline:none
+}
+textarea{resize:vertical;min-height:75px}
+button{
+  padding:12px 15px;border-radius:9px;
+  font-weight:700;background:#2563eb;color:white
+}
+button:hover{filter:brightness(1.12)}
+button:disabled{opacity:.5;cursor:not-allowed}
+.btn-secondary{background:#263650}
+.btn-green{background:#15803d}
+.btn-red{background:#b91c1c}
+.btn-small{padding:8px 10px;font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.full{width:100%;margin-top:14px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.student-item,.record{
+  padding:15px;margin-top:12px;border-radius:11px;
+  background:#0b1426;border:1px solid #263650
+}
+.record.reward{border-left:4px solid #22c55e}
+.record.fine{border-left:4px solid #ef4444}
+.record-title{font-weight:700;margin-bottom:6px}
+.reward-text{color:#4ade80}
+.fine-text{color:#f87171}
+.hidden{display:none!important}
+hr{border:0;border-top:1px solid #263650;margin:20px 0}
+.small{font-size:12px;color:#94a3b8}
+@media(max-width:520px){
+  .container{margin:16px auto}
+  .card{padding:16px}
+  .grid{grid-template-columns:1fr}
+  .logo{font-size:23px}
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">ADDIM KURSU</div>
+  <p>Şagirdlərin mükafat və cərimə paneli</p>
+</header>
+
+<main class="container">
+
+  <!-- GİRİŞ SEÇİMİ -->
+  <section id="home" class="card">
+    <h2>Xoş gəlmisiniz!</h2>
+    <p class="muted">Davam etmək üçün giriş növünü seçin.</p>
+    <div class="grid">
+      <button onclick="showLogin('teacher')">Müəllim girişi</button>
+      <button class="btn-secondary" onclick="showLogin('student')">Şagird girişi</button>
+    </div>
+  </section>
+
+  <!-- MÜƏLLİM GİRİŞİ -->
+  <section id="teacherLogin" class="card hidden">
+    <h2>Müəllim girişi</h2>
+    <label>Şifrə</label>
+    <input id="teacherPassword" type="password" placeholder="Müəllim şifrəsini daxil edin">
+    <button class="full" onclick="teacherLogin()">Daxil ol</button>
+    <button class="full btn-secondary" onclick="goHome()">Geri</button>
+    <p id="teacherError" class="fine-text"></p>
+  </section>
+
+  <!-- ŞAGİRD GİRİŞİ -->
+  <section id="studentLogin" class="card hidden">
+    <h2>Şagird girişi</h2>
+    <label>Adınızı seçin</label>
+    <select id="studentSelect"></select>
+    <label>Şəxsi şifrəniz</label>
+    <input id="studentPassword" type="password" placeholder="Şagird şifrəsi">
+    <button class="full" onclick="studentLogin()">Daxil ol</button>
+    <button class="full btn-secondary" onclick="goHome()">Geri</button>
+    <p id="studentError" class="fine-text"></p>
+  </section>
+
+  <!-- MÜƏLLİM PANELİ -->
+  <section id="teacherPanel" class="hidden">
+    <div class="card">
+      <div class="row">
+        <h2> Müəllim paneli</h2>
+        <button class="btn-secondary btn-small" onclick="logout()">Çıxış</button>
+      </div>
+      <p class="muted">Şagirdləri əlavə edin, mükafat və cərimələri qeyd edin.</p>
+    </div>
+
+    <div class="card">
+      <h2>Yeni şagird əlavə et</h2>
+      <label>Şagirdin adı və soyadı</label>
+      <input id="newName" placeholder="Məsələn: Əli Məmmədov">
+      <label>Şagird üçün şəxsi şifrə</label>
+      <input id="newPassword" type="password" placeholder="Şifrə təyin edin">
+      <button class="full" onclick="addStudent()">+ Şagird əlavə et</button>
+      <p id="addMessage" class="muted"></p>
+    </div>
+
+    <div class="card">
+      <h2>Şagirdlər</h2>
+      <div id="studentList"></div>
+    </div>
+  </section>
+
+  <!-- ŞAGİRD PANELİ -->
+  <section id="studentPanel" class="hidden">
+    <div class="card">
+      <div class="row">
+        <div>
+          <h2 id="studentWelcome">Şagird paneli</h2>
+          <p class="muted">Mükafat və cərimə qeydləriniz</p>
+        </div>
+        <button class="btn-secondary btn-small" onclick="logout()">Çıxış</button>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Mənim qeydlərim</h2>
+      <div id="myRecords"></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const STORAGE_KEY = "addim_course_records_v1";
+let students = loadStudents();
+let currentStudentId = null;
+
+function loadStudents(){
+  try{
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return Array.isArray(data) ? data : [];
+  }catch(e){
+    return [];
+  }
+}
+
+function saveStudents(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+}
+
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",
+    '"':"&quot;","'":"&#039;"
+  })[ch]);
+}
+
+function showOnly(id){
+  ["home","teacherLogin","studentLogin","teacherPanel","studentPanel"]
+    .forEach(x => document.getElementById(x).classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+}
+
+function goHome(){
+  document.getElementById("teacherPassword").value="";
+  document.getElementById("studentPassword").value="";
+  document.getElementById("teacherError").textContent="";
+  document.getElementById("studentError").textContent="";
+  showOnly("home");
+}
+
+function showLogin(type){
+  if(type==="teacher") showOnly("teacherLogin");
+  else{
+    refreshStudentSelect();
+    showOnly("studentLogin");
+  }
+}
+
+function teacherLogin(){
+  if(document.getElementById("teacherPassword").value === "1985"){
+    renderTeacher();
+    showOnly("teacherPanel");
+  }else{
+    document.getElementById("teacherError").textContent="Şifrə yanlışdır.";
+  }
+}
+
+function refreshStudentSelect(){
+  const select=document.getElementById("studentSelect");
+  select.innerHTML='<option value="">Şagird seçin</option>';
+  students.forEach(s=>{
+    const option=document.createElement("option");
+    option.value=s.id;
+    option.textContent=s.name;
+    select.appendChild(option);
+  });
+}
+
+function studentLogin(){
+  const id=document.getElementById("studentSelect").value;
+  const password=document.getElementById("studentPassword").value;
+  const s=students.find(x=>x.id===id && x.password===password);
+
+  if(!s){
+    document.getElementById("studentError").textContent=
+      "Adı və ya şifrəni yoxlayın.";
+    return;
+  }
+
+  currentStudentId=s.id;
+  renderMyRecords();
+  showOnly("studentPanel");
+}
+
+function addStudent(){
+  const name=document.getElementById("newName").value.trim();
+  const password=document.getElementById("newPassword").value.trim();
+
+  if(!name || !password){
+    document.getElementById("addMessage").textContent=
+      "Adı və şifrəni daxil edin.";
+    return;
+  }
+
+  if(students.some(s=>s.name.toLowerCase()===name.toLowerCase())){
+    document.getElementById("addMessage").textContent=
+      "Bu adda şagird artıq var.";
+    return;
+  }
+
+  students.push({
+    id:Date.now().toString()+Math.random().toString(16).slice(2),
+    name,
+    password,
+    records:[]
+  });
+
+  saveStudents();
+  document.getElementById("newName").value="";
+  document.getElementById("newPassword").value="";
+  document.getElementById("addMessage").textContent="Şagird əlavə edildi.";
+  renderTeacher();
+}
+
+function addRecord(studentId,type){
+  const student=students.find(s=>s.id===studentId);
+  if(!student)return;
+
+  const isReward=type==="reward";
+  const description=prompt(
+    isReward ? "Mükafatın səbəbini yazın:" : "Cərimənin səbəbini yazın:"
+  );
+
+  if(description===null)return;
+  if(!description.trim()){
+    alert("Səbəbi yazın.");
+    return;
+  }
+
+  student.records=student.records||[];
+  student.records.unshift({
+    id:Date.now().toString()+Math.random().toString(16).slice(2),
+    type,
+    description:description.trim(),
+    date:new Date().toLocaleDateString("az-AZ")
+  });
+
+  saveStudents();
+  renderTeacher();
+
+  if(currentStudentId===studentId)renderMyRecords();
+}
+
+function deleteRecord(studentId,recordId){
+  if(!confirm("Bu qeydi silmək istəyirsiniz?"))return;
+  const s=students.find(x=>x.id===studentId);
+  if(!s)return;
+  s.records=s.records.filter(r=>r.id!==recordId);
+  saveStudents();
+  renderTeacher();
+}
+
+function deleteStudent(id){
+  if(!confirm("Bu şagirdi və bütün qeydlərini silmək istəyirsiniz?"))return;
+  students=students.filter(s=>s.id!==id);
+  saveStudents();
+  refreshStudentSelect();
+  renderTeacher();
+}
+
+function renderTeacher(){
+  const list=document.getElementById("studentList");
+
+  if(!students.length){
+    list.innerHTML='<p class="muted">Hələ şagird əlavə edilməyib.</p>';
+    refreshStudentSelect();
+    return;
+  }
+
+  list.innerHTML=students.map(s=>{
+    const records=s.records||[];
+    return `
+      <div class="student-item">
+        <div class="row">
+          <strong>${escapeHTML(s.name)}</strong>
+          <button class="btn-red btn-small"
+            onclick="deleteStudent('${s.id}')">Şagirdi sil</button>
+        </div>
+
+        <div class="grid" style="margin-top:14px">
+          <button class="btn-green"
+            onclick="addRecord('${s.id}','reward')">+ Mükafat</button>
+          <button class="btn-red"
+            onclick="addRecord('${s.id}','fine')">− Cərimə</button>
+        </div>
+
+        <p class="muted">Qeydlər: ${records.length}</p>
+
+        ${records.map(r=>`
+          <div class="record ${r.type}">
+            <div class="row">
+              <span class="${r.type==='reward'?'reward-text':'fine-text'} record-title">
+                ${r.type==='reward'?'+ Mükafat':'− Cərimə'}
+              </span>
+              <button class="btn-secondary btn-small"
+                onclick="deleteRecord('${s.id}','${r.id}')">Sil</button>
+            </div>
+            <div>${escapeHTML(r.description)}</div>
+            <div class="small">${escapeHTML(r.date)}</div>
+          </div>
+        `).join("")}
+      </div>
+    `;
+  }).join("");
+
+  refreshStudentSelect();
+}
+
+function renderMyRecords(){
+  const s=students.find(x=>x.id===currentStudentId);
+  if(!s){
+    goHome();
+    return;
+  }
+
+  document.getElementById("studentWelcome").textContent=s.name;
+  const records=s.records||[];
+  const container=document.getElementById("myRecords");
+
+  if(!records.length){
+    container.innerHTML='<p class="muted">Hələ sizin üçün mükafat və ya cərimə qeydi yoxdur.</p>';
+    return;
+  }
+
+  container.innerHTML=records.map(r=>`
+    <div class="record ${r.type}">
+      <div class="record-title ${r.type==='reward'?'reward-text':'fine-text'}">
+        ${r.type==='reward'?'+ Mükafat':'− Cərimə'}
+      </div>
+      <div>${escapeHTML(r.description)}</div>
+      <div class="small">${escapeHTML(r.date)}</div>
+    </div>
+  `).join("");
+}
+
+function logout(){
   currentStudentId=null;
   document.getElementById("teacherPassword").value="";
   document.getElementById("studentPassword").value="";
   goHome();
 }
+
+renderTeacher();
+refreshStudentSelect();
+</script>
+</body>
+</html>
 
 renderTeacher();
 refreshStudentSelect();
