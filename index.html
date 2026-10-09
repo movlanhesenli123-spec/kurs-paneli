@@ -4,212 +4,500 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kurs Paneli</title>
+<title>ADDIM KURSU | İdarəetmə Paneli</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#f3f6fc;color:#1e293b}
-header{background:#2563eb;color:white;padding:22px}
-header h1{margin:0;font-size:25px}
-header p{margin:7px 0 0;color:#dbeafe}
-main{max-width:1200px;margin:25px auto;padding:0 15px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:20px}
-.card,.panel{background:white;border-radius:12px;padding:20px;box-shadow:0 3px 12px #0000000a}
-.card h3{font-size:14px;color:#64748b;margin:0 0 12px}
-.number{font-size:27px;font-weight:bold;color:#2563eb}
-.layout{display:grid;grid-template-columns:2fr 1fr;gap:20px}
-h2{font-size:19px;margin-top:0}
-input,button{font:inherit;border-radius:7px;padding:10px;border:1px solid #cbd5e1}
-input{width:100%;margin-bottom:10px}
-button{cursor:pointer;background:#2563eb;color:white;border:none}
-button:hover{opacity:.88}
-.danger{background:#dc2626}
-.add{width:100%;margin-bottom:15px}
-table{width:100%;border-collapse:collapse}
-th,td{text-align:left;padding:12px 7px;border-bottom:1px solid #e2e8f0}
-th{font-size:12px;color:#64748b}
-.name-action{background:none;color:#2563eb;padding:0;text-align:left;font-weight:bold}
-.small{font-size:12px;color:#64748b}
-.student-list{overflow-x:auto}
-#loginBox{display:none;background:white;padding:20px;border-radius:12px;margin-bottom:20px}
-@media(max-width:750px){.cards{grid-template-columns:1fr}.layout{grid-template-columns:1fr}header h1{font-size:21px}}
+:root{
+--bg:#080d1b;--panel:#101a30;--panel2:#14213b;
+--blue:#3978ff;--cyan:#36d9ff;--text:#f1f5ff;
+--muted:#8d9bb8;--line:#243453;--red:#ff5277;
+--green:#32dfa0;--gold:#ffc857
+}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Inter,Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer;transition:.2s}
+button:hover{filter:brightness(1.15);transform:translateY(-1px)}
+.login{min-height:100vh;display:grid;place-items:center;padding:20px;
+background:radial-gradient(ellipse at top,#142d59 0%,#080d1b 65%)}
+.loginbox{width:100%;max-width:410px;background:#101a30;
+border:1px solid #2c4771;border-radius:24px;padding:32px;
+box-shadow:0 20px 90px #0008;text-align:center}
+.logo{width:68px;height:68px;margin:0 auto 16px;border-radius:20px;
+display:grid;place-items:center;font-size:27px;font-weight:900;
+background:linear-gradient(135deg,#4388ff,#36d9ff);color:#071326;
+box-shadow:0 0 35px #3978ff55}
+h1,h2,h3,p{margin-top:0}
+.loginbox h1{font-size:25px;letter-spacing:2px;margin-bottom:8px}
+.loginbox p{color:var(--muted);font-size:13px}
+input,select{width:100%;padding:13px 14px;border:1px solid var(--line);
+border-radius:11px;background:#0b1325;color:var(--text);outline:none}
+input:focus,select:focus{border-color:var(--cyan)}
+.primary{border:0;border-radius:11px;padding:13px 18px;
+background:linear-gradient(110deg,#3978ff,#28bff0);
+color:white;font-weight:800}
+.loginbox .primary{width:100%;margin-top:12px}
+.error{color:var(--red);font-size:13px;margin-top:12px}
+#app{display:none}
+.sidebar{position:fixed;inset:0 auto 0 0;width:245px;padding:24px 17px;
+background:#0d1528;border-right:1px solid var(--line);z-index:5}
+.brand{display:flex;gap:12px;align-items:center;padding:5px 7px 28px}
+.brand .logo{width:45px;height:45px;border-radius:14px;font-size:19px;
+margin:0;flex-shrink:0}
+.brand strong{font-size:17px;letter-spacing:1px}
+.brand small{display:block;color:var(--cyan);font-size:10px;
+letter-spacing:2px;margin-top:5px}
+.navtitle{color:#647596;font-size:10px;letter-spacing:2px;
+padding:10px 12px}
+.nav{width:100%;border:0;background:transparent;color:#9baaca;
+text-align:left;padding:13px 14px;border-radius:11px;margin:3px 0;
+display:flex;gap:12px;align-items:center}
+.nav.active{background:linear-gradient(90deg,#2865df38,#2865df0b);
+color:white;border:1px solid #2d5aa0}
+.nav span{font-size:18px;width:23px}
+.sidebottom{position:absolute;bottom:20px;left:17px;right:17px;
+border-top:1px solid var(--line);padding-top:17px}
+.creator{font-size:10px;letter-spacing:1.5px;color:var(--cyan);
+margin-top:9px}
+main{margin-left:245px;padding:30px;max-width:1800px}
+.topbar{display:flex;justify-content:space-between;align-items:center;
+gap:15px;margin-bottom:28px;flex-wrap:wrap}
+.eyebrow{font-size:11px;color:var(--cyan);letter-spacing:2px;
+margin-bottom:9px}
+.topbar h1{font-size:27px;margin-bottom:7px}
+.sub{color:var(--muted);font-size:13px}
+.status{border:1px solid #245e51;background:#102c2a;
+color:var(--green);padding:10px 13px;border-radius:30px;font-size:12px}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+gap:16px;margin-bottom:22px}
+.stat{background:linear-gradient(145deg,#14213b,#0f182b);
+border:1px solid var(--line);padding:21px;border-radius:17px;
+min-width:0;position:relative;overflow:hidden}
+.stat:after{content:"";position:absolute;width:70px;height:70px;
+right:-25px;top:-25px;border-radius:50%;background:#3978ff12}
+.stat .icon{font-size:21px;margin-bottom:15px}
+.stat .label{color:var(--muted);font-size:12px;margin-bottom:9px}
+.stat .num{font-size:28px;font-weight:850;overflow-wrap:anywhere}
+.stat .hint{font-size:11px;color:#7183a6;margin-top:9px}
+.grid2{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(250px,1fr);
+gap:18px;margin-bottom:20px}
+.panel{background:var(--panel);border:1px solid var(--line);
+border-radius:17px;padding:22px;min-width:0}
+.panelhead{display:flex;justify-content:space-between;align-items:center;
+gap:12px;flex-wrap:wrap;margin-bottom:19px}
+.panelhead h2{font-size:16px;margin:0}
+.muted{color:var(--muted);font-size:12px}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:#192743;color:#dce7ff;
+padding:9px 12px;border-radius:9px;font-size:12px;font-weight:700}
+.btn.blue{background:#2865e7;border-color:#2865e7;color:white}
+.btn.red{background:#3a1726;border-color:#753048;color:#ff8da5}
+.btn.green{background:#10352d;border-color:#1e6753;color:#72f2c0}
+.btn.gold{background:#362b16;border-color:#705522;color:#ffdc82}
+.searchrow{display:flex;gap:10px;margin-bottom:15px}
+.searchrow input{flex:1;min-width:0}
+.searchrow select{width:auto;max-width:155px}
+.tablewrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th{text-align:left;color:#7183a6;font-size:10px;letter-spacing:1px;
+font-weight:700;padding:13px 12px;border-bottom:1px solid var(--line)}
+td{padding:14px 12px;border-bottom:1px solid #1d2a42;font-size:12px}
+tbody tr:hover{background:#17243b}
+.avatar{display:inline-grid;place-items:center;width:34px;height:34px;
+border-radius:10px;background:#203967;color:#9fd8ff;font-weight:900;
+margin-right:10px;vertical-align:middle}
+.person{font-weight:700}
+.tag{display:inline-block;border-radius:20px;padding:5px 9px;
+font-size:10px;background:#173e36;color:#6df0bb}
+.tag.due{background:#3b2b16;color:#ffd27a}
+.tag.none{background:#34202c;color:#ff9db0}
+.empty{text-align:center;color:var(--muted);padding:35px 10px}
+.quick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick button{padding:16px 10px;text-align:left;line-height:1.8}
+.quick b{display:block;font-size:13px}
+.quick small{font-size:11px;color:var(--muted)}
+.activity{display:flex;gap:12px;align-items:flex-start;
+padding:12px 0;border-bottom:1px solid var(--line)}
+.activity:last-child{border:0}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--cyan);
+margin-top:5px;flex-shrink:0;box-shadow:0 0 12px #36d9ff66}
+.activity b{font-size:12px}
+.activity small{display:block;color:var(--muted);margin-top:5px;
+font-size:11px}
+.page{display:none}
+.page.active{display:block}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field label{display:block;font-size:12px;color:#aab8d2;margin-bottom:7px}
+.field.full{grid-column:1/-1}
+.modal{position:fixed;inset:0;background:#030711cc;backdrop-filter:blur(8px);
+z-index:20;display:none;place-items:center;padding:16px}
+.modal.show{display:grid}
+.modalbox{width:100%;max-width:520px;max-height:90vh;overflow:auto;
+background:#111d33;border:1px solid #30486e;border-radius:19px;padding:24px;
+box-shadow:0 25px 90px #0009}
+.modalhead{display:flex;justify-content:space-between;align-items:center;
+margin-bottom:22px}
+.modalhead h2{font-size:19px;margin:0}
+.close{border:0;background:#202d45;color:white;border-radius:9px;
+padding:8px 12px}
+.formactions{display:flex;gap:10px;margin-top:20px;justify-content:flex-end}
+.formactions button{min-width:100px}
+.balance{padding:15px;background:#0b1427;border:1px solid var(--line);
+border-radius:12px;margin:15px 0;display:flex;justify-content:space-between;
+gap:10px;flex-wrap:wrap}
+.balance b{color:var(--cyan)}
+.toast{position:fixed;bottom:22px;right:22px;z-index:50;
+background:#133a30;border:1px solid #27775d;color:#a5ffda;
+padding:14px 20px;border-radius:12px;display:none;max-width:90vw;
+box-shadow:0 10px 40px #0007}
+.chart{display:flex;align-items:end;gap:10px;height:125px;
+padding:12px 0 0}
+.barcol{flex:1;min-width:0;text-align:center;height:100%;
+display:flex;flex-direction:column;justify-content:end;gap:8px}
+.bar{background:linear-gradient(0deg,#2465e9,#36d9ff);
+border-radius:5px 5px 0 0;min-height:3px;width:100%}
+.barcol small{font-size:10px;color:var(--muted)}
+.mobiletop{display:none}
+@media(max-width:1050px){
+.cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid2{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+.sidebar{position:static;width:100%;padding:12px 14px;
+border-right:0;border-bottom:1px solid var(--line)}
+.brand{padding:0 3px 12px}
+.brand .logo{width:39px;height:39px}
+.sidebar .navtitle,.sidebottom{display:none}
+.navs{display:flex;gap:6px;overflow-x:auto}
+.nav{width:auto;white-space:nowrap;margin:0;padding:10px}
+main{margin:0;padding:20px 13px}
+.topbar h1{font-size:23px}
+.cards{gap:10px}
+.stat{padding:15px}
+.stat .num{font-size:23px}
+.panel{padding:15px}
+.fields{grid-template-columns:1fr}
+.field.full{grid-column:auto}
+.searchrow{flex-wrap:wrap}
+.searchrow input{min-width:100%}
+.searchrow select{flex:1;max-width:none}
+}
 </style>
 </head>
 <body>
-<header>
-<h1>Kurs Paneli</h1>
-<p>Şagirdlərin nəticələri və idarəetmə paneli</p>
-</header>
-<main>
-<div class="cards">
-<div class="card"><h3>Ümumi şagirdlər</h3><div class="number" id="total">0</div></div>
-<div class="card"><h3>Ümumi bal</h3><div class="number" id="points">0</div></div>
-<div class="card"><h3>Ən yüksək bal</h3><div class="number" id="best">0</div></div>
-</div>
 
-<div style="margin-bottom:15px">
-<button onclick="showLogin()">Müəllim girişi</button>
-<button onclick="logout()" style="background:#64748b">Çıxış</button>
-</div>
-
-<div id="loginBox">
-<h2>Müəllim girişi</h2>
-<input id="password" type="password" placeholder="Parolu daxil et">
-<button onclick="login()">Daxil ol</button>
-</div>
-
-<div class="layout">
-<section class="panel">
-<h2>Şagirdlər</h2>
-<div id="addBox" style="display:none">
-<input id="studentName" placeholder="Şagirdin adı">
-<button class="add" onclick="addStudent()">+ Şagird əlavə et</button>
-</div>
-<div class="student-list">
-<table>
-<thead><tr><th>Şagird</th><th>Bal</th><th>Status</th></tr></thead>
-<tbody id="students"></tbody>
-</table>
-</div>
-<p class="small">Şagirdin adını dəyişmək və ya silmək üçün adına bas.</p>
+<section class="login" id="login">
+ <div class="loginbox">
+  <div class="logo">A</div>
+  <h1>ADDIM KURSU</h1>
+  <p>ŞAGİRD İDARƏETMƏ SİSTEMİ</p>
+  <div style="height:20px"></div>
+  <input id="password" type="password" placeholder="Müəllim şifrəsi"
+  onkeydown="if(event.key==='Enter')login()">
+  <button class="primary" onclick="login()">PANELƏ DAXİL OL →</button>
+  <div id="loginError" class="error"></div>
+  <div class="creator">SAYTIN YARADICISI</div>
+ </div>
 </section>
-<section class="panel">
-<h2>Reytinq</h2>
-<div id="ranking">Hələ şagird yoxdur.</div>
-</section>
+
+<div id="app">
+ <aside class="sidebar">
+  <div class="brand">
+   <div class="logo">A</div>
+   <div><strong>ADDIM KURSU</strong><small>CONTROL CENTER</small></div>
+  </div>
+  <div class="navtitle">ƏSAS MENYU</div>
+  <div class="navs">
+   <button class="nav active" data-page="dashboard" onclick="go('dashboard',this)"><span>◈</span> İdarə paneli</button>
+   <button class="nav" data-page="students" onclick="go('students',this)"><span>♙</span> Şagirdlər</button>
+   <button class="nav" data-page="finance" onclick="go('finance',this)"><span>₼</span> Ödənişlər</button>
+  </div>
+  <div class="sidebottom">
+   <div class="muted">ADDIM KURSU · 2026</div>
+   <div class="creator">✦ SAYTIN YARADICISI</div>
+   <button class="nav" style="margin-top:15px" onclick="logout()"><span>⇥</span> Çıxış</button>
+  </div>
+ </aside>
+
+ <main>
+  <header class="topbar">
+   <div><div class="eyebrow">ADDIM KURSU / CONTROL CENTER</div>
+    <h1 id="pageTitle">İdarə paneli</h1>
+    <div class="sub" id="today"></div>
+   </div>
+   <div class="status">● SİSTEM AKTİVDİR</div>
+  </header>
+
+  <section class="page active" id="dashboard">
+   <div class="cards">
+    <div class="stat"><div class="icon">♙</div><div class="label">Ümumi şagirdlər</div><div class="num" id="total">0</div><div class="hint">Qeydiyyatda olan şagirdlər</div></div>
+    <div class="stat"><div class="icon">₼</div><div class="label">Ümumi gəlir</div><div class="num" id="income">0 ₼</div><div class="hint">Qeydə alınan ödənişlər</div></div>
+    <div class="stat"><div class="icon">◷</div><div class="label">Ödəniş gözləyən</div><div class="num" id="pending">0</div><div class="hint">Ödəniş borcu olan şagirdlər</div></div>
+    <div class="stat"><div class="icon">✦</div><div class="label">Cərimə və mükafat</div><div class="num" id="extras">0 ₼</div><div class="hint">Qeydə alınmış əlavə məbləğlər</div></div>
+   </div>
+
+   <div class="grid2">
+    <div class="panel">
+     <div class="panelhead"><h2>Gəlir statistikası</h2><span class="muted">Son 6 ay</span></div>
+     <div class="chart" id="chart"></div>
+    </div>
+    <div class="panel">
+     <div class="panelhead"><h2>Sürətli əməliyyatlar</h2></div>
+     <div class="quick">
+      <button class="btn" onclick="studentModal()"><b>＋ Şagird əlavə et</b><small>Yeni qeydiyyat</small></button>
+      <button class="btn" onclick="go('students')"><b>♙ Şagirdlər</b><small>Siyahını idarə et</small></button>
+      <button class="btn" onclick="go('finance')"><b>₼ Ödənişlər</b><small>Maliyyə qeydləri</small></button>
+      <button class="btn" onclick="exportCSV()"><b>⇩ Excel / CSV</b><small>Siyahını ixrac et</small></button>
+     </div>
+    </div>
+   </div>
+   <div class="panel">
+    <div class="panelhead"><h2>Son şagirdlər</h2><button class="btn" onclick="go('students')">Hamısına bax →</button></div>
+    <div class="tablewrap"><table><thead><tr><th>ŞAGİRD</th><th>TELEFON</th><th>AYLIQ ÖDƏNİŞ</th><th>STATUS</th></tr></thead><tbody id="recent"></tbody></table></div>
+   </div>
+  </section>
+
+  <section class="page" id="students">
+   <div class="panel">
+    <div class="panelhead"><div><h2>Şagirdlərin siyahısı</h2><div class="muted" style="margin-top:7px">Şagirdləri əlavə et, redaktə et və idarə et.</div></div><button class="primary" onclick="studentModal()">＋ Yeni şagird</button></div>
+    <div class="searchrow"><input id="search" placeholder="🔎 Ad, soyad və ya telefon..." oninput="render()"><select id="filter" onchange="render()"><option value="all">Bütün şagirdlər</option><option value="paid">Ödəniş edilib</option><option value="due">Ödəniş gözləyir</option></select></div>
+    <div class="tablewrap"><table><thead><tr><th>ŞAGİRD</th><th>TELEFON</th><th>AYLIQ</th><th>ÖDƏNİŞ</th><th>ƏMƏLİYYATLAR</th></tr></thead><tbody id="studentRows"></tbody></table></div>
+    <div class="muted" id="count" style="margin-top:15px"></div>
+   </div>
+  </section>
+
+  <section class="page" id="finance">
+   <div class="cards">
+    <div class="stat"><div class="icon">₼</div><div class="label">Cəmi ödənişlər</div><div class="num" id="fIncome">0 ₼</div></div>
+    <div class="stat"><div class="icon">＋</div><div class="label">Cərimələr</div><div class="num" id="fFine">0 ₼</div></div>
+    <div class="stat"><div class="icon">✦</div><div class="label">Mükafatlar</div><div class="num" id="fReward">0 ₼</div></div>
+    <div class="stat"><div class="icon">◷</div><div class="label">Gözlənilən məbləğ</div><div class="num" id="fDue">0 ₼</div></div>
+   </div>
+   <div class="panel">
+    <div class="panelhead"><div><h2>Maliyyə əməliyyatları</h2><div class="muted" style="margin-top:7px">Ödəniş, cərimə və mükafat qeydləri</div></div><button class="primary" onclick="transactionModal()">＋ Əməliyyat əlavə et</button></div>
+    <div class="tablewrap"><table><thead><tr><th>ŞAGİRD</th><th>ƏMƏLİYYAT</th><th>MƏBLƏĞ</th><th>TARİX</th><th>QEYD</th><th>ƏMƏLİYYAT</th></tr></thead><tbody id="financeRows"></tbody></table></div>
+   </div>
+  </section>
+ </main>
 </div>
-</main>
+
+<div class="modal" id="studentModal">
+ <div class="modalbox">
+  <div class="modalhead"><h2 id="studentModalTitle">Yeni şagird</h2><button class="close" onclick="closeModal('studentModal')">✕</button></div>
+  <form onsubmit="saveStudent(event)">
+   <input type="hidden" id="editId">
+   <div class="fields">
+    <div class="field"><label>Ad *</label><input id="sName" required placeholder="Şagirdin adı"></div>
+    <div class="field"><label>Soyad *</label><input id="sSurname" required placeholder="Şagirdin soyadı"></div>
+    <div class="field"><label>Telefon</label><input id="sPhone" placeholder="050 000 00 00"></div>
+    <div class="field"><label>Aylıq ödəniş (₼) *</label><input id="sFee" type="number" min="0" step="0.01" required placeholder="100"></div>
+    <div class="field"><label>Qrup / fənn</label><input id="sGroup" placeholder="Məsələn, Riyaziyyat"></div>
+    <div class="field"><label>Ödəniş statusu</label><select id="sPaid"><option value="false">Ödəniş gözləyir</option><option value="true">Ödəniş edilib</option></select></div>
+    <div class="field full"><label>Qeyd</label><input id="sNote" placeholder="Əlavə məlumat"></div>
+   </div>
+   <div class="formactions"><button type="button" class="btn" onclick="closeModal('studentModal')">Ləğv et</button><button class="primary">Yadda saxla</button></div>
+  </form>
+ </div>
+</div>
+
+<div class="modal" id="transactionModal">
+ <div class="modalbox">
+  <div class="modalhead"><h2>Yeni əməliyyat</h2><button class="close" onclick="closeModal('transactionModal')">✕</button></div>
+  <form onsubmit="saveTransaction(event)">
+   <div class="fields">
+    <div class="field full"><label>Şagird *</label><select id="tStudent" required></select></div>
+    <div class="field"><label>Əməliyyat növü</label><select id="tType"><option value="payment">Ödəniş</option><option value="fine">Cərimə</option><option value="reward">Mükafat</option></select></div>
+    <div class="field"><label>Məbləğ (₼) *</label><input id="tAmount" type="number" min="0.01" step="0.01" required></div>
+    <div class="field full"><label>Qeyd</label><input id="tNote" placeholder="Əməliyyat haqqında qeyd"></div>
+   </div>
+   <div class="formactions"><button type="button" class="btn" onclick="closeModal('transactionModal')">Ləğv et</button><button class="primary">Yadda saxla</button></div>
+  </form>
+ </div>
+</div>
+
+<div class="modal" id="confirmModal">
+ <div class="modalbox" style="max-width:400px;text-align:center">
+  <div style="font-size:36px;margin:5px 0 15px">⚠️</div>
+  <h2 id="confirmTitle">Təsdiq et</h2>
+  <p id="confirmText" class="muted" style="line-height:1.7"></p>
+  <div class="formactions" style="justify-content:center">
+   <button class="btn" onclick="closeModal('confirmModal')">Xeyr, geri qayıt</button>
+   <button class="btn red" id="confirmYes">Bəli, sil</button>
+  </div>
+ </div>
+</div>
+<div id="toast" class="toast"></div>
 
 <script>
-const KEY="kursPanelData";
-let teacher=false;
-let data;
-
-try{
-data=JSON.parse(localStorage.getItem(KEY));
-}catch(e){data=null}
-
-if(!data || !Array.isArray(data.students)){
-data={students:[],records:[]};
+const $=id=>document.getElementById(id);
+const KEY='addim_kursu_students_v3';
+const TXKEY='addim_kursu_transactions_v3';
+let students=[],transactions=[],confirmAction=null,toastTimer;
+const money=n=>(Number(n)||0).toLocaleString('az-AZ',{maximumFractionDigits:2})+' ₼';
+const dateNow=()=>new Date().toLocaleDateString('az-AZ');
+const safe=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function load(){
+ try{students=JSON.parse(localStorage.getItem(KEY)||'[]');transactions=JSON.parse(localStorage.getItem(TXKEY)||'[]');if(!Array.isArray(students))students=[];if(!Array.isArray(transactions))transactions=[];}catch(e){students=[];transactions=[]}
 }
-
-if(!Array.isArray(data.records)) data.records=[];
-
-function save(){
-localStorage.setItem(KEY,JSON.stringify(data));
-render();
-}
-
-function showLogin(){
-document.getElementById("loginBox").style.display="block";
-}
-
+function persist(){localStorage.setItem(KEY,JSON.stringify(students));localStorage.setItem(TXKEY,JSON.stringify(transactions));}
 function login(){
-if(document.getElementById("password").value==="1985"){
-teacher=true;
-document.getElementById("loginBox").style.display="none";
-document.getElementById("addBox").style.display="block";
-render();
-alert("Müəllim girişi uğurludur!");
-}else{
-alert("Parol yanlışdır!");
+ if($('password').value==='1985'){
+ $('login').style.display='none';$('app').style.display='block';
+ $('loginError').textContent='';load();render();$('today').textContent='Bu gün: '+dateNow();
+ }else $('loginError').textContent='Şifrə yanlışdır. Yenidən yoxla.';
 }
+function logout(){$('app').style.display='none';$('login').style.display='grid';$('password').value='';}
+function go(page,el){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ $(page).classList.add('active');
+ document.querySelectorAll('.nav[data-page]').forEach(n=>n.classList.toggle('active',n.dataset.page===page));
+ $('pageTitle').textContent={dashboard:'İdarə paneli',students:'Şagirdlərin idarə edilməsi',finance:'Maliyyə və ödənişlər'}[page];
+ render();
 }
-
-function logout(){
-teacher=false;
-document.getElementById("addBox").style.display="none";
-render();
+function toast(msg){
+ $('toast').textContent=msg;$('toast').style.display='block';
+ clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').style.display='none',2600);
 }
-
-function addStudent(){
-if(!teacher){alert("Əvvəl müəllim kimi daxil ol.");return}
-const input=document.getElementById("studentName");
-const name=input.value.trim();
-if(!name){alert("Şagirdin adını yaz.");return}
-if(data.students.some(s=>s.name.toLowerCase()===name.toLowerCase())){
-alert("Bu adda şagird artıq var.");return;
+function closeModal(id){$(id).classList.remove('show');}
+function openModal(id){$(id).classList.add('show');}
+function ask(title,text,action){
+ $('confirmTitle').textContent=title;$('confirmText').textContent=text;
+ confirmAction=action;
+ $('confirmYes').onclick=()=>{closeModal('confirmModal');if(confirmAction)confirmAction();confirmAction=null};
+ openModal('confirmModal');
 }
-data.students.push({id:Date.now(),name:name,points:0});
-input.value="";
-save();
+function studentModal(id=null){
+ $('editId').value='';$('studentModalTitle').textContent=id?'Şagirdi redaktə et':'Yeni şagird';
+ ['sName','sSurname','sPhone','sFee','sGroup','sNote'].forEach(x=>$(x).value='');
+ $('sPaid').value='false';
+ if(id){
+ const s=students.find(x=>x.id===id);if(!s)return;
+ $('editId').value=s.id;$('sName').value=s.name;$('sSurname').value=s.surname;
+ $('sPhone').value=s.phone||'';$('sFee').value=s.fee;$('sGroup').value=s.group||'';
+ $('sPaid').value=String(!!s.paid);$('sNote').value=s.note||'';
+ }
+ openModal('studentModal');
 }
-
-function studentActions(id){
-if(!teacher){
-alert("Əvvəl müəllim parolu ilə daxil ol.");
-return;
+function saveStudent(e){
+ e.preventDefault();
+ const id=$('editId').value;
+ const old=students.find(s=>s.id===id);
+ const s={id:id||('s'+Date.now()+Math.random().toString(36).slice(2,6)),
+ name:$('sName').value.trim(),surname:$('sSurname').value.trim(),
+ phone:$('sPhone').value.trim(),fee:Number($('sFee').value)||0,
+ group:$('sGroup').value.trim(),paid:$('sPaid').value==='true',
+ note:$('sNote').value.trim(),created:old?.created||new Date().toISOString()};
+ if(old)students=students.map(x=>x.id===id?s:x);else students.unshift(s);
+ persist();closeModal('studentModal');render();toast(old?'Şagird məlumatları yeniləndi':'Yeni şagird əlavə edildi');
 }
-
-const s=data.students.find(x=>x.id===id);
-if(!s)return;
-
-const choice=prompt(
-s.name+" üçün seçim et:\n1 — Adını dəyiş\n2 — Şagirdi sil\n0 — Ləğv et"
-);
-
-if(choice==="1"){
-const newName=prompt("Yeni adı yaz:",s.name);
-if(newName===null)return;
-const name=newName.trim();
-if(!name){alert("Ad boş ola bilməz.");return}
-if(data.students.some(x=>x.id!==id && x.name.toLowerCase()===name.toLowerCase())){
-alert("Bu adda başqa şagird var.");return;
+function deleteStudent(id){
+ const s=students.find(x=>x.id===id);if(!s)return;
+ ask('Şagirdi silmək?',s.name+' '+s.surname+' siyahıdan silinəcək. Bu əməliyyatın geri qaytarılması mümkün deyil.',()=>{
+ students=students.filter(x=>x.id!==id);
+ transactions=transactions.filter(t=>t.studentId!==id);
+ persist();render();toast('Şagird silindi');
+ });
 }
-s.name=name;
-save();
-}else if(choice==="2"){
-if(confirm(s.name+" adlı şagird silinsin?")){
-data.students=data.students.filter(x=>x.id!==id);
-data.records=data.records.filter(r=>r.studentId!==id);
-save();
+function changePaid(id){
+ const s=students.find(x=>x.id===id);if(!s)return;
+ s.paid=!s.paid;
+ if(s.paid){
+ transactions.unshift({id:'t'+Date.now(),studentId:id,type:'payment',amount:s.fee,date:dateNow(),note:'Aylıq ödəniş'});
+ }
+ persist();render();toast(s.paid?'Ödəniş qeydə alındı':'Status dəyişdirildi');
 }
+function transactionModal(){
+ if(!students.length){toast('Əvvəlcə şagird əlavə et');return}
+ $('tStudent').innerHTML=students.map(s=>`<option value="${safe(s.id)}">${safe(s.name+' '+s.surname)}</option>`).join('');
+ $('tAmount').value='';$('tNote').value='';$('tType').value='payment';openModal('transactionModal');
 }
+function saveTransaction(e){
+ e.preventDefault();
+ const studentId=$('tStudent').value,type=$('tType').value,amount=Number($('tAmount').value);
+ if(!students.some(s=>s.id===studentId)||amount<=0)return;
+ transactions.unshift({id:'t'+Date.now()+Math.random().toString(36).slice(2,5),
+ studentId,type,amount,date:dateNow(),note:$('tNote').value.trim()});
+ if(type==='payment'){
+ const s=students.find(s=>s.id===studentId);if(s)s.paid=true;
+ }
+ persist();closeModal('transactionModal');render();toast('Əməliyyat qeydə alındı');
 }
-
+function deleteTransaction(id){
+ ask('Əməliyyatı silmək?','Bu maliyyə qeydi silinəcək. Davam edək?',()=>{
+ const t=transactions.find(x=>x.id===id);
+ transactions=transactions.filter(x=>x.id!==id);
+ if(t&&t.type==='payment'){
+ const another=transactions.some(x=>x.studentId===t.studentId&&x.type==='payment');
+ if(!another){const s=students.find(x=>x.id===t.studentId);if(s)s.paid=false;}
+ }
+ persist();render();toast('Əməliyyat silindi');
+ });
+}
+function studentName(id){
+ const s=students.find(x=>x.id===id);return s?s.name+' '+s.surname:'Silinmiş şagird';
+}
 function render(){
-const students=document.getElementById("students");
-students.innerHTML="";
-
-data.students.forEach(s=>{
-const tr=document.createElement("tr");
-const tdName=document.createElement("td");
-const nameButton=document.createElement("button");
-nameButton.className="name-action";
-nameButton.textContent=s.name;
-nameButton.onclick=()=>studentActions(s.id);
-tdName.appendChild(nameButton);
-
-const tdPoints=document.createElement("td");
-tdPoints.textContent=Number(s.points)||0;
-
-const tdStatus=document.createElement("td");
-tdStatus.textContent=(Number(s.points)||0)>=50?"Yaxşı":"Aktiv";
-
-tr.append(tdName,tdPoints,tdStatus);
-students.appendChild(tr);
-});
-
-const total=data.students.length;
-const points=data.students.reduce((sum,s)=>sum+(Number(s.points)||0),0);
-const best=data.students.reduce((max,s)=>Math.max(max,Number(s.points)||0),0);
-
-document.getElementById("total").textContent=total;
-document.getElementById("points").textContent=points;
-document.getElementById("best").textContent=best;
-
-const sorted=[...data.students].sort((a,b)=>(Number(b.points)||0)-(Number(a.points)||0));
-document.getElementById("ranking").innerHTML=sorted.length
-?sorted.map((s,i)=>`<p><b>${i+1}.</b> ${escapeHTML(s.name)} — ${Number(s.points)||0} bal</p>`).join("")
-:"Hələ şagird yoxdur.";
+ const payments=transactions.filter(t=>t.type==='payment').reduce((a,t)=>a+t.amount,0);
+ const fines=transactions.filter(t=>t.type==='fine').reduce((a,t)=>a+t.amount,0);
+ const rewards=transactions.filter(t=>t.type==='reward').reduce((a,t)=>a+t.amount,0);
+ const due=students.filter(s=>!s.paid).reduce((a,s)=>a+s.fee,0);
+ $('total').textContent=students.length;$('income').textContent=money(payments);
+ $('pending').textContent=students.filter(s=>!s.paid).length;
+ $('extras').textContent=money(fines+rewards);
+ $('fIncome').textContent=money(payments);$('fFine').textContent=money(fines);
+ $('fReward').textContent=money(rewards);$('fDue').textContent=money(due);
+ const status=s=>s.paid?'<span class="tag">Ödənilib</span>':'<span class="tag due">Gözləyir</span>';
+ const studentRow=s=>`<tr><td><span class="avatar">${safe((s.name||'?')[0].toUpperCase())}</span><span class="person">${safe(s.name)} ${safe(s.surname)}</span><br><span class="muted" style="margin-left:44px">${safe(s.group||'Ümumi')}</span></td><td>${safe(s.phone||'—')}</td><td>${money(s.fee)}</td><td>${status(s)}</td></tr>`;
+ $('recent').innerHTML=students.slice(0,5).map(studentRow).join('')||'<tr><td colspan="4" class="empty">Hələ şagird əlavə edilməyib.</td></tr>';
+ const q=($('search')?.value||'').toLocaleLowerCase('az');
+ const filter=$('filter')?.value||'all';
+ const filtered=students.filter(s=>(s.name+' '+s.surname+' '+s.phone).toLocaleLowerCase('az').includes(q))
+ .filter(s=>filter==='all'||(filter==='paid'?s.paid:!s.paid));
+ $('studentRows').innerHTML=filtered.map(s=>`<tr>
+ <td><span class="avatar">${safe((s.name||'?')[0].toUpperCase())}</span><span class="person">${safe(s.name)} ${safe(s.surname)}</span><br><span class="muted" style="margin-left:44px">${safe(s.group||'Ümumi')}</span></td>
+ <td>${safe(s.phone||'—')}</td><td>${money(s.fee)}</td><td>${status(s)}</td>
+ <td><div class="actions">
+ <button class="btn green" onclick="changePaid('${safe(s.id)}')">${s.paid?'Ödənilib ✓':'Ödəniş al'}</button>
+ <button class="btn" onclick="studentModal('${safe(s.id)}')">Redaktə</button>
+ <button class="btn red" onclick="deleteStudent('${safe(s.id)}')">Sil</button>
+ </div></td></tr>`).join('')||'<tr><td colspan="5" class="empty">Şagird tapılmadı.</td></tr>';
+ $('count').textContent=`Göstərilir: ${filtered.length} / ${students.length} şagird`;
+ const typeName={payment:'Ödəniş',fine:'Cərimə',reward:'Mükafat'};
+ const typeClass={payment:'tag',fine:'tag due',reward:'tag'};
+ $('financeRows').innerHTML=transactions.map(t=>`<tr>
+ <td>${safe(studentName(t.studentId))}</td>
+ <td><span class="${typeClass[t.type]||'tag'}">${typeName[t.type]||safe(t.type)}</span></td>
+ <td>${money(t.amount)}</td><td>${safe(t.date)}</td><td>${safe(t.note||'—')}</td>
+ <td><button class="btn red" onclick="deleteTransaction('${safe(t.id)}')">Sil</button></td>
+ </tr>`).join('')||'<tr><td colspan="6" class="empty">Hələ maliyyə əməliyyatı yoxdur.</td></tr>';
+ drawChart();
 }
-
-function escapeHTML(value){
-return String(value).replace(/[&<>"']/g,c=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[c]));
+function drawChart(){
+ const months=[];
+ for(let i=5;i>=0;i--){
+ const d=new Date();d.setDate(1);d.setMonth(d.getMonth()-i);
+ months.push({year:d.getFullYear(),month:d.getMonth(),label:d.toLocaleDateString('az-AZ',{month:'short'})});
+ }
+ const sums=months.map(m=>transactions.filter(t=>{
+ if(t.type!=='payment')return false;
+ const parts=(t.date||'').split('.');
+ if(parts.length!==3)return false;
+ return Number(parts[2])===m.year&&Number(parts[1])-1===m.month;
+ }).reduce((a,t)=>a+t.amount,0));
+ const max=Math.max(...sums,1);
+ $('chart').innerHTML=months.map((m,i)=>`<div class="barcol"><div class="bar" title="${money(sums[i])}" style="height:${Math.max(3,sums[i]/max*85)}%"></div><small>${safe(m.label)}</small></div>`).join('');
 }
-
-render();
+function exportCSV(){
+ const rows=[['Ad','Soyad','Telefon','Aylıq ödəniş','Qrup','Status','Qeyd'],
+ ...students.map(s=>[s.name,s.surname,s.phone,s.fee,s.group,s.paid?'Ödənilib':'Gözləyir',s.note])];
+ const csv='\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\r\n');
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+ const url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='addim-kursu-sagirdler.csv';a.click();URL.revokeObjectURL(url);
+}
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{
+ if(e.target===m)closeModal(m.id);
+}));
 </script>
 </body>
 </html>
