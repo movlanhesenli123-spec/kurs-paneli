@@ -1,260 +1,440 @@
-
 <!DOCTYPE html>
 <html lang="az">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ADDIM KURSU</title>
+<title>Sinif Plus — Cərimə və Mükafat</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#0b1220;color:#edf2ff;font-family:Arial,sans-serif}
-header{background:#111c32;padding:24px 12px;text-align:center;border-bottom:1px solid #263650}
-.logo{font-size:27px;font-weight:800;color:#60a5fa}
-header p{color:#a8b5cc;margin-bottom:0}
-main{width:min(850px,calc(100% - 24px));margin:24px auto}
-.card{background:#121e33;border:1px solid #263650;border-radius:15px;padding:20px;margin-bottom:16px}
-h2{font-size:21px;margin-top:0}
-.muted{color:#a8b5cc;font-size:14px}
-label{display:block;margin:12px 0 6px}
-input,select{width:100%;padding:12px;border:1px solid #34445f;border-radius:9px;background:#0b1426;color:white;margin-bottom:12px}
-button{border:0;border-radius:9px;padding:12px 15px;background:#2563eb;color:white;font-weight:bold;cursor:pointer}
-button:active{opacity:.75}
-.full{width:100%;margin-top:9px}
-.secondary{background:#263650}
-.green{background:#15803d}
-.red{background:#b91c1c}
-.hidden{display:none!important}
-.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.student{padding:15px;margin-top:12px;border-radius:11px;background:#0b1426;border:1px solid #263650}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.actions button{min-width:48px}
-.record{padding:12px;margin-top:9px;background:#0b1426;border-left:4px solid #64748b;border-radius:8px}
-.reward{border-color:#22c55e}
-.fine{border-color:#ef4444}
-.note{font-size:12px;color:#94a3b8;margin-top:6px}
-.good{color:#4ade80}
-.bad{color:#f87171}
+:root{--bg:#f4f7fc;--card:#fff;--text:#17233d;--muted:#77839a;
+--blue:#4967f5;--green:#16a675;--red:#e65368;--line:#e9edf5}
+body{margin:0;background:var(--bg);color:var(--text);
+font-family:Inter,Arial,sans-serif}
+button,input{font:inherit}
+button{cursor:pointer;transition:.2s}
+button:active{transform:scale(.97)}
+.layout{display:flex;min-height:100vh}
+.sidebar{width:245px;background:#17233d;color:white;padding:28px 18px;flex-shrink:0}
+.brand{font-size:22px;font-weight:900;margin:0 0 8px}
+.brand span{color:#92a7ff}
+.subbrand{color:#aab6ce;font-size:12px;margin-bottom:35px}
+.nav{width:100%;border:0;background:transparent;color:#b9c4da;
+text-align:left;padding:14px;border-radius:12px;margin:4px 0;font-weight:600}
+.nav.active,.nav:hover{background:#2c3c60;color:white}
+.sidebar-note{margin-top:45px;padding:15px;background:#243452;
+border-radius:14px;color:#c3cde0;font-size:12px;line-height:1.7}
+main{padding:30px;width:100%;max-width:1500px;margin:auto}
+.top{display:flex;justify-content:space-between;align-items:center;
+gap:15px;margin-bottom:28px;flex-wrap:wrap}
+h1{font-size:27px;margin:0 0 8px;letter-spacing:-.7px}
+.muted{color:var(--muted);font-size:13px}
+.date{background:white;border:1px solid var(--line);border-radius:12px;
+padding:12px 15px;font-size:13px;color:#61708c}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+gap:16px;margin-bottom:24px}
+.stat,.panel{background:var(--card);border:1px solid var(--line);
+border-radius:19px;padding:21px;box-shadow:0 5px 22px #22365b05}
+.stat-label{font-size:12px;color:var(--muted);font-weight:600}
+.stat-value{font-size:27px;font-weight:850;margin:13px 0 7px;
+letter-spacing:-.7px}
+.stat-foot{font-size:11px;color:var(--muted)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;
+margin-right:5px}
+.green{color:var(--green)}.red{color:var(--red)}
+.blue{color:var(--blue)}
+.content{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(260px,1fr);
+gap:20px;align-items:start}
+.panel{padding:22px;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:center;
+gap:12px;flex-wrap:wrap;margin-bottom:18px}
+h2{font-size:17px;margin:0 0 6px}
+.primary{background:var(--blue);color:white;border:0;border-radius:10px;
+padding:11px 15px;font-size:12px;font-weight:750}
+.primary:hover{background:#354fe0}
+input{width:100%;padding:12px;border:1px solid #dfe5f0;border-radius:10px;
+outline:none;background:white;color:var(--text)}
+input:focus{border-color:var(--blue)}
+.search{max-width:210px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th{text-align:left;color:#8490a5;font-size:10px;text-transform:uppercase;
+letter-spacing:.5px;padding:13px 8px;border-bottom:1px solid var(--line)}
+td{padding:14px 8px;border-bottom:1px solid #f0f2f7;font-size:12px}
+tr:last-child td{border-bottom:0}
+.student{display:flex;align-items:center;gap:10px}
+.avatar{width:36px;height:36px;display:grid;place-items:center;
+border-radius:12px;background:#edf0ff;color:var(--blue);font-weight:850}
+.student-name{font-weight:750;font-size:12px}
+.student-id{color:var(--muted);font-size:10px;margin-top:4px}
+.money{font-weight:800}
+.actions{display:flex;gap:6px;align-items:center}
+.action{border:0;width:30px;height:30px;border-radius:9px;
+font-size:18px;font-weight:800;display:grid;place-items:center}
+.minus{background:#fff0f1;color:var(--red)}
+.plus{background:#e6f8f0;color:var(--green)}
+.reward-btn{background:#fff5dd;color:#9a6a00;border:0;
+border-radius:8px;padding:8px 9px;font-size:11px;font-weight:800}
+.delete-btn{background:#f1f3f8;color:#7d8799;border:0;
+border-radius:8px;padding:7px;font-size:11px}
+.empty{text-align:center;padding:30px;color:var(--muted)}
+.rank-list{display:flex;flex-direction:column;gap:15px}
+.rank-item{display:flex;align-items:center;gap:11px}
+.rank-number{width:29px;height:29px;border-radius:9px;display:grid;
+place-items:center;background:#f0f3fa;color:#67758d;font-weight:800;font-size:12px}
+.rank-info{flex:1;min-width:0}
+.rank-name{font-size:12px;font-weight:750;overflow:hidden;
+text-overflow:ellipsis;white-space:nowrap}
+.rank-bar{height:5px;background:#edf0f6;border-radius:10px;margin-top:8px;overflow:hidden}
+.rank-fill{height:100%;background:var(--blue);border-radius:10px}
+.rank-amount{font-size:12px;font-weight:850}
+.section{display:none}
+.section.active{display:block}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px}
+.info-row{display:flex;justify-content:space-between;gap:10px;
+padding:13px 0;border-bottom:1px solid var(--line);font-size:12px}
+.info-row:last-child{border:0}
+.modal{position:fixed;inset:0;background:#111c33a6;display:none;
+align-items:center;justify-content:center;padding:20px;z-index:10}
+.modal.show{display:flex}
+.dialog{width:100%;max-width:400px;background:white;border-radius:20px;padding:25px}
+.dialog h2{margin-bottom:8px}
+.dialog input{margin:14px 0}
+.dialog-actions{display:flex;gap:10px;margin-top:18px}
+.dialog-actions button{flex:1}
+.secondary{border:1px solid var(--line);background:white;border-radius:10px;padding:11px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+background:#17233d;color:white;padding:13px 18px;border-radius:12px;
+font-size:13px;display:none;z-index:20;box-shadow:0 8px 30px #0002}
+@media(max-width:1050px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+.content{grid-template-columns:1fr}}
+@media(max-width:650px){.layout{display:block}.sidebar{width:100%;padding:17px}
+.brand{font-size:20px}.subbrand{margin-bottom:12px}
+.navs{display:flex;gap:5px;overflow-x:auto}
+.nav{width:auto;white-space:nowrap;padding:10px;font-size:12px}
+.sidebar-note{display:none}main{padding:18px 12px}
+h1{font-size:22px}.stat,.panel{padding:15px}.stats{gap:9px}
+.stat-value{font-size:22px}.bottom-grid{grid-template-columns:1fr}
+.search{max-width:100%;width:100%}.panel-head{align-items:flex-start}
+}
 </style>
 </head>
 <body>
-<header>
- <div class="logo">ADDIM KURSU</div>
- <p>Şagirdlərin mükafat və cərimə paneli</p>
-</header>
+<div class="layout">
+<aside class="sidebar">
+  <div class="brand">Sinif <span>Plus.</span></div>
+  <div class="subbrand">CƏRİMƏ VƏ MÜKAFAT SİSTEMİ</div>
+  <div class="navs">
+    <button class="nav active" data-page="dashboard">▦ &nbsp; Ümumi baxış</button>
+    <button class="nav" data-page="students">♙ &nbsp; Şagirdlər</button>
+    <button class="nav" data-page="rewards">★ &nbsp; Mükafatlar</button>
+    <button class="nav" data-page="history">◷ &nbsp; Əməliyyat tarixçəsi</button>
+  </div>
+  <div class="sidebar-note">✦ Sinif idarəetmə paneli<br>
+  Cərimə: 0,60 ₼<br>Mükafat: 1,00 ₼</div>
+</aside>
+
 <main>
- <section id="home" class="card">
-  <h2>Xoş gəlmisiniz!</h2>
-  <p class="muted">Giriş növünü seçin.</p>
-  <button class="full" id="openTeacher">Müəllim girişi</button>
-  <button class="full secondary" id="openStudent">Şagird girişi</button>
- </section>
-
- <section id="teacherLogin" class="card hidden">
-  <h2>Müəllim girişi</h2>
-  <label>Şifrə</label>
-  <input id="teacherPassword" type="password" placeholder="Şifrəni daxil edin">
-  <button class="full" id="teacherEnter">Daxil ol</button>
-  <button class="full secondary back">Geri</button>
-  <p id="teacherError" class="bad"></p>
- </section>
-
- <section id="studentLogin" class="card hidden">
-  <h2>Şagird girişi</h2>
-  <label>Adınızı seçin</label>
-  <select id="studentSelect"></select>
-  <label>Şəxsi şifrə</label>
-  <input id="studentPassword" type="password" placeholder="Şifrəniz">
-  <button class="full" id="studentEnter">Daxil ol</button>
-  <button class="full secondary back">Geri</button>
-  <p id="studentError" class="bad"></p>
- </section>
-
- <section id="teacherPanel" class="hidden">
-  <div class="card">
-   <div class="row"><h2>Müəllim paneli</h2><button class="secondary logout">Çıxış</button></div>
-   <p class="muted">Şagirdləri və qeydləri idarə edin.</p>
+<header class="top">
+  <div>
+    <h1 id="pageTitle">Ümumi baxış</h1>
+    <div class="muted">Sinfin nəticələrini bir yerdən idarə et.</div>
   </div>
-  <div class="card">
-   <h2>Şagird əlavə et</h2>
-   <label>Ad və soyad</label>
-   <input id="newName" placeholder="Şagirdin adı">
-   <label>Şəxsi şifrə</label>
-   <input id="newPassword" type="password" placeholder="Şagirdin şifrəsi">
-   <button class="full" id="addStudent">+ Şagird əlavə et</button>
-   <p id="addMessage" class="muted"></p>
-  </div>
-  <div class="card"><h2>Şagirdlər</h2><div id="studentList"></div></div>
- </section>
+  <div class="date" id="today"></div>
+</header>
 
- <section id="studentPanel" class="hidden">
-  <div class="card">
-   <div class="row"><h2 id="studentName"></h2><button class="secondary logout">Çıxış</button></div>
-   <p id="studentFine" class="muted"></p>
+<div class="stats">
+  <div class="stat"><div class="stat-label">ŞAGİRD SAYI</div>
+    <div class="stat-value" id="studentCount">0</div>
+    <div class="stat-foot">Qeydiyyatda olan şagirdlər</div></div>
+  <div class="stat"><div class="stat-label"><span class="dot" style="background:#e65368"></span>CƏRİMƏLƏR</div>
+    <div class="stat-value red" id="fineTotal">0,00 ₼</div>
+    <div class="stat-foot">Yığılmış ümumi cərimə</div></div>
+  <div class="stat"><div class="stat-label"><span class="dot" style="background:#16a675"></span>MÜKAFATLAR</div>
+    <div class="stat-value green" id="rewardTotal">0,00 ₼</div>
+    <div class="stat-foot">Verilmiş ümumi mükafat</div></div>
+  <div class="stat"><div class="stat-label">BALANS FƏRQİ</div>
+    <div class="stat-value blue" id="balanceTotal">0,00 ₼</div>
+    <div class="stat-foot">Mükafat − cərimə</div></div>
+</div>
+
+<section class="section active" id="dashboard">
+<div class="content">
+  <div class="panel">
+    <div class="panel-head">
+      <div><h2>Şagirdlərin siyahısı</h2>
+      <div class="muted">Cəriməni artır və ya azalt.</div></div>
+      <button class="primary" onclick="openAdd()">＋ Şagird əlavə et</button>
+    </div>
+    <div style="margin-bottom:15px"><input class="search" id="search" placeholder="Şagird axtar..." oninput="renderStudents()"></div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>ŞAGİRD</th><th>CƏRİMƏ</th><th>İDARƏ</th></tr></thead>
+      <tbody id="studentRows"></tbody>
+    </table></div>
   </div>
-  <div class="card"><h2>Mükafat və cərimələrim</h2><div id="studentRecords"></div></div>
- </section>
+  <div class="panel">
+    <div class="panel-head"><div><h2>🏆 Cərimə sıralaması</h2>
+    <div class="muted">Ən çox cəriməsi olan şagirdlər</div></div></div>
+    <div class="rank-list" id="rankList"></div>
+  </div>
+</div>
+<div class="bottom-grid">
+  <div class="panel"><h2>💰 Maliyyə xülasəsi</h2>
+    <div class="info-row"><span>Hər cərimənin məbləği</span><b>0,60 ₼</b></div>
+    <div class="info-row"><span>Hər mükafatın məbləği</span><b>1,00 ₼</b></div>
+    <div class="info-row"><span>Verilmiş cərimələrin sayı</span><b id="fineCount">0</b></div>
+    <div class="info-row"><span>Verilmiş mükafatların sayı</span><b id="rewardCount">0</b></div>
+  </div>
+  <div class="panel"><h2>✨ Son əməliyyatlar</h2>
+    <div id="recent"></div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="students">
+  <div class="panel">
+    <div class="panel-head"><div><h2>Bütün şagirdlər</h2>
+    <div class="muted">Şagird əlavə et, cəriməni idarə et və siyahıya bax.</div></div>
+    <button class="primary" onclick="openAdd()">＋ Yeni şagird</button></div>
+    <input id="search2" placeholder="Şagird axtar..." oninput="document.getElementById('search').value=this.value;renderStudents()" style="margin-bottom:15px">
+    <div class="table-wrap"><table>
+    <thead><tr><th>ŞAGİRD</th><th>CƏRİMƏ</th><th>MÜKAFAT</th><th>İDARƏ</th></tr></thead>
+    <tbody id="studentRows2"></tbody>
+    </table></div>
+  </div>
+</section>
+
+<section class="section" id="rewards">
+  <div class="panel">
+    <div class="panel-head"><div><h2>⭐ Mükafat mərkəzi</h2>
+    <div class="muted">Düzgün cavab və fəallıq üçün 1 manat mükafat ver.</div></div></div>
+    <div class="muted" style="margin-bottom:14px">Şagird seç və mükafat düyməsinə bas.</div>
+    <div id="rewardCards"></div>
+  </div>
+</section>
+
+<section class="section" id="history">
+  <div class="panel">
+    <div class="panel-head"><div><h2>Əməliyyat tarixçəsi</h2>
+    <div class="muted">Edilən dəyişikliklər burada saxlanılır.</div></div>
+    <button class="secondary" onclick="clearHistory()">Tarixçəni təmizlə</button></div>
+    <div class="table-wrap"><table>
+    <thead><tr><th>VAXT</th><th>ŞAGİRD</th><th>ƏMƏLİYYAT</th><th>MƏBLƏĞ</th></tr></thead>
+    <tbody id="historyRows"></tbody>
+    </table></div>
+  </div>
+</section>
 </main>
+</div>
+
+<div class="modal" id="addModal">
+  <div class="dialog">
+    <h2>Yeni şagird</h2><div class="muted">Şagirdin adını daxil et.</div>
+    <input id="newName" placeholder="Ad və soyad" maxlength="70">
+    <div class="dialog-actions">
+      <button class="secondary" onclick="closeAdd()">Ləğv et</button>
+      <button class="primary" onclick="addStudent()">Əlavə et</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
 
 <script>
-(function(){
-"use strict";
+const FINE = 60;      // 60 qəpik
+const REWARD = 100;   // 1 manat
+const STORAGE_KEY = "sinifplus_data_v1";
 
-const KEY="addim_kursu_final_v1";
-const $=id=>document.getElementById(id);
-const sections=["home","teacherLogin","studentLogin","teacherPanel","studentPanel"];
-let students=[];
-let currentId=null;
+let data = {students:[], history:[], nextId:1};
+let activePage = "dashboard";
 
-try{
- const data=JSON.parse(localStorage.getItem(KEY)||"[]");
- if(Array.isArray(data))students=data;
-}catch(e){students=[];}
-
-function save(){localStorage.setItem(KEY,JSON.stringify(students));}
-function show(id){
- sections.forEach(s=>$(s).classList.add("hidden"));
- $(id).classList.remove("hidden");
+function load(){
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if(saved){
+      const parsed = JSON.parse(saved);
+      if(Array.isArray(parsed.students) && Array.isArray(parsed.history)){
+        data = parsed;
+        data.students.forEach(s=>{
+          s.fine = Number(s.fine)||0;
+          s.reward = Number(s.reward)||0;
+        });
+      }
+    }
+  } catch(e) { console.error("Məlumat oxunmadı",e); }
 }
-function esc(value){
- return String(value).replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function save(){
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  } catch(e) { alert("Məlumat saxlamaq mümkün olmadı."); }
 }
-function refreshSelect(){
- const select=$("studentSelect");
- select.innerHTML='<option value="">Şagird seçin</option>';
- students.forEach(s=>{
-  const opt=document.createElement("option");
-  opt.value=s.id;opt.textContent=s.name;select.appendChild(opt);
- });
+function money(cents){
+  return (cents/100).toLocaleString("az-AZ",{
+    minimumFractionDigits:2,maximumFractionDigits:2
+  })+" ₼";
 }
-function teacherLogin(){
- if($("teacherPassword").value==="1985"){
-  $("teacherError").textContent="";
-  renderTeacher();show("teacherPanel");
- }else $("teacherError").textContent="Şifrə yanlışdır.";
+function esc(s){
+  return String(s).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
-function studentLogin(){
- const id=$("studentSelect").value;
- const password=$("studentPassword").value;
- const s=students.find(x=>x.id===id&&x.password===password);
- if(!s){$("studentError").textContent="Adı və şifrəni yoxlayın.";return;}
- currentId=s.id;
- renderStudent();show("studentPanel");
+function initials(name){
+  return name.trim().split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase();
 }
-function addStudent(){
- const name=$("newName").value.trim();
- const password=$("newPassword").value.trim();
- if(!name||!password){$("addMessage").textContent="Ad və şifrəni daxil edin.";return;}
- if(students.some(s=>s.name.toLowerCase()===name.toLowerCase())){
-  $("addMessage").textContent="Bu adda şagird artıq var.";return;
- }
- students.push({
-  id:Date.now().toString()+Math.random().toString(36).slice(2),
-  name,password,fine:0,records:[]
- });
- save();
- $("newName").value="";$("newPassword").value="";
- $("addMessage").textContent="Şagird əlavə edildi.";
- renderTeacher();
+function timeNow(){
+  return new Date().toLocaleString("az-AZ",{
+    day:"2-digit",month:"2-digit",year:"numeric",
+    hour:"2-digit",minute:"2-digit"
+  });
 }
-function addFine(id,amount){
- const s=students.find(x=>x.id===id);if(!s)return;
- s.fine=Math.max(0,(Number(s.fine)||0)+amount);
- s.records.unshift({
-  id:Date.now().toString()+Math.random().toString(36).slice(2),
-  type:"fine",text:amount>0?"Cərimə +60":"Cərimə −60",
-  date:new Date().toLocaleDateString("az-AZ"),amount
- });
- save();renderTeacher();
- if(currentId===id)renderStudent();
+function log(s, type, amount){
+  data.history.unshift({
+    id:Date.now()+Math.random(),
+    name:s.name,type,amount,time:timeNow()
+  });
+  data.history=data.history.slice(0,500);
 }
-function addReward(id){
- const s=students.find(x=>x.id===id);if(!s)return;
- s.records.unshift({
-  id:Date.now().toString()+Math.random().toString(36).slice(2),
-  type:"reward",text:"1 manat mükafat",
-  date:new Date().toLocaleDateString("az-AZ")
- });
- save();renderTeacher();
- if(currentId===id)renderStudent();
+function notify(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.style.display="block";
+  clearTimeout(window.toastTimer);
+  window.toastTimer=setTimeout(()=>t.style.display="none",2200);
 }
-function removeRecord(sid,rid){
- if(!confirm("Bu qeydi silmək istəyirsiniz?"))return;
- const s=students.find(x=>x.id===sid);if(!s)return;
- const record=s.records.find(r=>r.id===rid);
- if(record&&record.type==="fine"){
-  s.fine=Math.max(0,(Number(s.fine)||0)-(Number(record.amount)||0));
- }
- s.records=s.records.filter(r=>r.id!==rid);
- save();renderTeacher();
- if(currentId===sid)renderStudent();
+function update(){
+  save();
+  const fines=data.students.reduce((a,s)=>a+s.fine,0);
+  const rewards=data.students.reduce((a,s)=>a+s.reward,0);
+  document.getElementById("studentCount").textContent=data.students.length;
+  document.getElementById("fineTotal").textContent=money(fines);
+  document.getElementById("rewardTotal").textContent=money(rewards);
+  const balance=document.getElementById("balanceTotal");
+  balance.textContent=money(rewards-fines);
+  balance.className="stat-value "+(rewards>=fines?"green":"red");
+  document.getElementById("fineCount").textContent=
+    data.history.filter(h=>h.type==="Cərimə əlavə edildi").length;
+  document.getElementById("rewardCount").textContent=
+    data.history.filter(h=>h.type==="Mükafat verildi").length;
+  renderStudents();renderRanks();renderRewards();renderRecent();renderHistory();
+}
+function studentRow(s,full=false){
+  return `<tr>
+    <td><div class="student"><div class="avatar">${esc(initials(s.name))}</div>
+    <div><div class="student-name">${esc(s.name)}</div>
+    <div class="student-id">Şagird #${s.id}</div></div></div></td>
+    <td class="money red">${money(s.fine)}</td>
+    ${full?`<td class="money green">${money(s.reward)}</td>`:""}
+    <td><div class="actions">
+      <button class="action minus" title="60 qəpik çıx" onclick="changeFine(${s.id},-1)">−</button>
+      <button class="action plus" title="60 qəpik əlavə et" onclick="changeFine(${s.id},1)">+</button>
+      ${full?`<button class="reward-btn" onclick="giveReward(${s.id})">★ +1 ₼</button>`:""}
+      <button class="delete-btn" title="Şagirdi sil" onclick="removeStudent(${s.id})">Sil</button>
+    </div></td>
+  </tr>`;
+}
+function renderStudents(){
+  const q=(document.getElementById("search")?.value||"").trim().toLocaleLowerCase("az");
+  const list=data.students.filter(s=>s.name.toLocaleLowerCase("az").includes(q));
+  document.getElementById("studentRows").innerHTML=list.length?
+    list.map(s=>studentRow(s)).join(""):
+    `<tr><td colspan="3" class="empty">Hələ şagird yoxdur. “Şagird əlavə et” düyməsinə bas.</td></tr>`;
+  document.getElementById("studentRows2").innerHTML=list.length?
+    list.map(s=>studentRow(s,true)).join(""):
+    `<tr><td colspan="4" class="empty">Şagird tapılmadı.</td></tr>`;
+}
+function renderRanks(){
+  const sorted=[...data.students].sort((a,b)=>b.fine-a.fine);
+  const max=Math.max(1,...sorted.map(s=>s.fine));
+  document.getElementById("rankList").innerHTML=sorted.length?
+    sorted.slice(0,8).map((s,i)=>`
+      <div class="rank-item">
+        <div class="rank-number">${i+1}</div>
+        <div class="rank-info"><div class="rank-name">${esc(s.name)}</div>
+          <div class="rank-bar"><div class="rank-fill" style="width:${s.fine/max*100}%"></div></div>
+        </div>
+        <div class="rank-amount">${money(s.fine)}</div>
+      </div>`).join(""):`<div class="empty">Sıralama üçün şagird əlavə et.</div>`;
+}
+function renderRewards(){
+  document.getElementById("rewardCards").innerHTML=data.students.length?
+    `<div class="table-wrap"><table><thead><tr><th>ŞAGİRD</th><th>MÜKAFAT</th><th>ƏMƏLİYYAT</th></tr></thead><tbody>`+
+    data.students.slice().sort((a,b)=>b.reward-a.reward).map(s=>`
+    <tr><td><div class="student"><div class="avatar">${esc(initials(s.name))}</div>
+    <div class="student-name">${esc(s.name)}</div></div></td>
+    <td class="money green">${money(s.reward)}</td>
+    <td><button class="reward-btn" onclick="giveReward(${s.id})">★ +1 manat</button></td></tr>`
+    ).join("")+`</tbody></table></div>`:
+    `<div class="empty">Əvvəlcə şagird əlavə et.</div>`;
+}
+function renderRecent(){
+  const list=data.history.slice(0,5);
+  document.getElementById("recent").innerHTML=list.length?list.map(h=>`
+    <div class="info-row"><div><b>${esc(h.name)}</b><div class="muted" style="margin-top:5px">${esc(h.type)}</div></div>
+    <div style="text-align:right"><b class="${h.amount>0?"red":"green"}">${h.amount>0?"+":""}${money(h.amount)}</b>
+    <div class="muted" style="margin-top:5px">${esc(h.time)}</div></div></div>`
+  ).join(""):`<div class="empty">Hələ əməliyyat yoxdur.</div>`;
+}
+function renderHistory(){
+  document.getElementById("historyRows").innerHTML=data.history.length?
+    data.history.map(h=>`<tr><td>${esc(h.time)}</td><td><b>${esc(h.name)}</b></td>
+    <td>${esc(h.type)}</td><td class="money ${h.amount>0?"red":"green"}">${h.amount>0?"+":""}${money(h.amount)}</td></tr>`).join(""):
+    `<tr><td colspan="4" class="empty">Tarixçə boşdur.</td></tr>`;
+}
+function changeFine(id, direction){
+  const s=data.students.find(x=>x.id===id);
+  if(!s)return;
+  if(direction<0 && s.fine<FINE){notify("Cərimə 0-dan aşağı düşə bilməz.");return;}
+  s.fine+=direction*FINE;
+  log(s,direction>0?"Cərimə əlavə edildi":"Cərimə azaldıldı",direction*FINE);
+  update();notify(s.name+" — cərimə "+(direction>0?"artırıldı":"azaldıldı"));
+}
+function giveReward(id){
+  const s=data.students.find(x=>x.id===id);
+  if(!s)return;
+  s.reward+=REWARD;
+  log(s,"Mükafat verildi",REWARD);
+  update();notify(s.name+" üçün 1 manat mükafat əlavə edildi!");
 }
 function removeStudent(id){
- if(!confirm("Bu şagirdi və qeydlərini silmək istəyirsiniz?"))return;
- students=students.filter(s=>s.id!==id);
- save();renderTeacher();refreshSelect();
+  const s=data.students.find(x=>x.id===id);
+  if(!s)return;
+  if(!confirm(s.name+" adlı şagirdi və onun hesab məlumatlarını silmək istəyirsən?"))return;
+  data.students=data.students.filter(x=>x.id!==id);
+  log({name:s.name},"Şagird silindi",0);
+  update();notify("Şagird siyahıdan silindi.");
 }
-function renderTeacher(){
- $("studentList").innerHTML=students.length?students.map(s=>`
-  <div class="student">
-   <div class="row"><strong>${esc(s.name)}</strong>
-   <button class="red" data-action="delete-student" data-id="${s.id}">Şagirdi sil</button></div>
-   <p class="muted">Cərimə: <strong>${Number(s.fine)||0}</strong></p>
-   <div class="actions">
-    <button class="green" data-action="plus" data-id="${s.id}">+</button>
-    <button class="red" data-action="minus" data-id="${s.id}">−</button>
-    <button class="secondary" data-action="reward" data-id="${s.id}">+1 manat</button>
-   </div>
-   ${(s.records||[]).map(r=>`
-    <div class="record ${r.type==="reward"?"reward":"fine"}">
-     <div class="row"><span>${esc(r.text)}</span>
-     <button class="secondary" data-action="delete-record" data-id="${s.id}" data-record="${r.id}">Sil</button></div>
-     <div class="note">${esc(r.date)}</div>
-    </div>`).join("")}
-  </div>`).join(""):'<p class="muted">Hələ şagird əlavə edilməyib.</p>';
- refreshSelect();
+function openAdd(){
+  document.getElementById("newName").value="";
+  document.getElementById("addModal").classList.add("show");
+  setTimeout(()=>document.getElementById("newName").focus(),50);
 }
-function renderStudent(){
- const s=students.find(x=>x.id===currentId);
- if(!s){logout();return;}
- $("studentName").textContent=s.name;
- $("studentFine").textContent="Cərimə: "+(Number(s.fine)||0);
- $("studentRecords").innerHTML=s.records.length?s.records.map(r=>`
-  <div class="record ${r.type==="reward"?"reward":"fine"}">
-   <strong>${esc(r.text)}</strong><div class="note">${esc(r.date)}</div>
-  </div>`).join(""):'<p class="muted">Hələ qeyd yoxdur.</p>';
+function closeAdd(){document.getElementById("addModal").classList.remove("show")}
+function addStudent(){
+  const input=document.getElementById("newName");
+  const name=input.value.trim();
+  if(!name){notify("Şagirdin adını yaz.");input.focus();return;}
+  if(data.students.some(s=>s.name.toLocaleLowerCase("az")===name.toLocaleLowerCase("az"))){
+    notify("Bu adda şagird artıq var.");return;
+  }
+  const s={id:data.nextId++,name,fine:0,reward:0};
+  data.students.push(s);log(s,"Şagird əlavə edildi",0);
+  closeAdd();update();notify("Şagird uğurla əlavə edildi.");
 }
-function logout(){
- currentId=null;
- $("teacherPassword").value="";
- $("studentPassword").value="";
- $("teacherError").textContent="";
- $("studentError").textContent="";
- show("home");
+function clearHistory(){
+  if(!confirm("Bütün əməliyyat tarixçəsi silinsin? Şagirdlərin hesabları dəyişməyəcək."))return;
+  data.history=[];update();notify("Tarixçə təmizləndi.");
 }
-$("openTeacher").addEventListener("click",()=>show("teacherLogin"));
-$("openStudent").addEventListener("click",()=>{refreshSelect();show("studentLogin");});
-$("teacherEnter").addEventListener("click",teacherLogin);
-$("studentEnter").addEventListener("click",studentLogin);
-$("addStudent").addEventListener("click",addStudent);
-document.querySelectorAll(".back").forEach(b=>b.addEventListener("click",()=>show("home")));
-document.querySelectorAll(".logout").forEach(b=>b.addEventListener("click",logout));
-
-$("studentList").addEventListener("click",e=>{
- const b=e.target.closest("button[data-action]");if(!b)return;
- const id=b.dataset.id;
- switch(b.dataset.action){
-  case "plus":addFine(id,60);break;
-  case "minus":addFine(id,-60);break;
-  case "reward":addReward(id);break;
-  case "delete-student":removeStudent(id);break;
-  case "delete-record":removeRecord(id,b.dataset.record);break;
- }
+function showPage(page){
+  activePage=page;
+  document.querySelectorAll(".section").forEach(x=>x.classList.toggle("active",x.id===page));
+  document.querySelectorAll(".nav").forEach(x=>x.classList.toggle("active",x.dataset.page===page));
+  const titles={dashboard:"Ümumi baxış",students:"Şagirdlər",rewards:"Mükafatlar",history:"Əməliyyat tarixçəsi"};
+  document.getElementById("pageTitle").textContent=titles[page]||"Sinif Plus";
+}
+document.querySelectorAll(".nav").forEach(b=>b.addEventListener("click",()=>showPage(b.dataset.page)));
+document.getElementById("newName").addEventListener("keydown",e=>{if(e.key==="Enter")addStudent()});
+document.getElementById("addModal").addEventListener("click",e=>{if(e.target.id==="addModal")closeAdd()});
+document.getElementById("today").textContent=new Date().toLocaleDateString("az-AZ",{
+  day:"numeric",month:"long",year:"numeric"
 });
-
-renderTeacher();
-})();
+load();update();
 </script>
 </body>
 </html>
