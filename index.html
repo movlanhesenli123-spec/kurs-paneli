@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="az">
 <head>
@@ -7,382 +6,294 @@
 <title>Sinif Plus</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f3f6fc;color:#18233b;font-family:Arial,sans-serif}
-button,input{font:inherit}
-button{cursor:pointer}
-header{background:#17233d;color:white;padding:19px 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.logo{font-size:24px;font-weight:900}.logo span{color:#92a7ff}
-.header-right{display:flex;gap:9px;align-items:center;flex-wrap:wrap}
-.btn{border:0;border-radius:10px;padding:11px 14px;font-weight:bold}
-.login{background:#536df5;color:white}.logout{background:#33415e;color:white}
-main{max-width:1250px;margin:auto;padding:25px 16px}
-h1{font-size:27px;margin:0 0 8px}h2{font-size:18px;margin:0 0 7px}
-.muted{font-size:13px;color:#7c879d}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:22px 0}
-.card,.panel{background:white;border:1px solid #e6eaf3;border-radius:17px;padding:20px;box-shadow:0 5px 20px #25395b08}
-.stat-label{font-size:12px;color:#7c879d}.stat-value{font-size:26px;font-weight:900;margin-top:12px}
-.red{color:#e34f63}.green{color:#139d70}.blue{color:#4967f5}
-.columns{display:grid;grid-template-columns:1.6fr 1fr;gap:17px;align-items:start}
-.panel-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.add{background:#4967f5;color:white}
-input{border:1px solid #dce3ef;border-radius:10px;padding:12px;outline:none;max-width:100%}
-.search{width:100%;margin-bottom:14px}
-.tablewrap{overflow-x:auto}
-table{border-collapse:collapse;width:100%;white-space:nowrap}
-th{text-align:left;font-size:10px;color:#8691a5;padding:12px 7px;border-bottom:1px solid #edf0f6}
-td{padding:13px 7px;border-bottom:1px solid #edf0f6;font-size:12px}
-tr:last-child td{border-bottom:0}
-.person{display:flex;align-items:center;gap:9px}
-.avatar{width:36px;height:36px;border-radius:12px;background:#edf0ff;color:#4967f5;display:grid;place-items:center;font-weight:bold}
-.name{font-weight:800}.tag{font-size:10px;color:#4967f5;background:#edf0ff;padding:4px 6px;border-radius:6px;display:inline-block;margin-top:4px}
-.creator{color:#9a6a00;background:#fff2d2}
-.actions{display:flex;gap:5px;align-items:center}
-.pm{width:31px;height:31px;border:0;border-radius:9px;font-size:20px;font-weight:bold}
-.plus{background:#e2f8ee;color:#109968}.minus{background:#fff0f1;color:#df4358}
-.reward{background:#fff3d6;color:#956400;border:0;border-radius:8px;padding:8px;font-size:11px;font-weight:bold}
-.del{background:#f0f2f7;color:#65718a;border:0;border-radius:8px;padding:7px;font-size:11px}
-.rank{display:flex;align-items:center;gap:10px;margin:17px 0}
-.ranknum{background:#eff2f8;border-radius:8px;padding:8px 10px;font-weight:bold}
-.rankbody{flex:1;min-width:0}.bar{height:5px;background:#edf0f6;border-radius:8px;margin-top:7px;overflow:hidden}
-.fill{height:100%;background:#4967f5;border-radius:8px}
-.bottom{display:grid;grid-template-columns:1fr 1fr;gap:17px;margin-top:17px}
-.line{display:flex;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid #edf0f6;font-size:12px}
-.line:last-child{border:0}
-.empty{text-align:center;padding:25px;color:#8993a7;font-size:13px}
-.modal{position:fixed;inset:0;background:#101a30b8;display:none;align-items:center;justify-content:center;padding:20px;z-index:5}
-.modal.show{display:flex}
-.dialog{background:white;padding:24px;border-radius:18px;width:100%;max-width:370px}
-.dialog input{width:100%;margin:12px 0}
-.dialogbuttons{display:flex;gap:9px;margin-top:10px}.dialogbuttons button{flex:1}
-.error{color:#df4358;font-size:12px;min-height:16px}
-#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#17233d;color:white;padding:13px 17px;border-radius:10px;display:none;z-index:8;font-size:13px}
-@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}}
-@media(max-width:550px){header{padding:16px}.logo{font-size:21px}main{padding:18px 11px}h1{font-size:23px}.card,.panel{padding:14px}.bottom{grid-template-columns:1fr}.stat-value{font-size:22px}}
+body{margin:0;font-family:Arial,sans-serif;background:#f3f6fc;color:#172033}
+header{background:#172554;color:white;padding:22px}
+header h1{margin:0 0 6px;font-size:27px}
+header p{margin:0;color:#cbd5e1}
+main{max-width:1100px;margin:auto;padding:20px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.card{background:white;border-radius:14px;padding:18px;box-shadow:0 3px 12px #0f172a0c}
+.card small{color:#64748b}
+.card h2{margin:9px 0 0;font-size:25px}
+.panel{background:white;border-radius:14px;padding:18px;margin-bottom:18px;box-shadow:0 3px 12px #0f172a0c}
+.panel h2{margin:0 0 15px;font-size:19px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:600px}
+th,td{text-align:left;padding:13px 10px;border-bottom:1px solid #e8edf5}
+th{background:#f8fafc;color:#64748b;font-size:13px}
+.red{color:#dc2626}
+.green{color:#059669}
+.actions{display:flex;gap:6px;align-items:center}
+button{border:0;border-radius:8px;padding:9px 12px;font-weight:bold;cursor:pointer}
+.pm{width:35px;height:35px;padding:0;font-size:22px}
+.plus{background:#dcfce7;color:#15803d}
+.minus{background:#fee2e2;color:#b91c1c}
+.del{background:#f1f5f9;color:#475569}
+.reward-label{font-size:11px;color:#64748b;margin-right:4px}
+.addrow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:15px}
+input{padding:11px;border:1px solid #cbd5e1;border-radius:8px;font-size:15px;min-width:0}
+.primary{background:#2563eb;color:white}
+.login{background:#172554;color:white}
+.creator{color:#2563eb;font-size:11px;display:block;margin-top:4px}
+.leyla{color:#dc2626;font-size:12px}
+#loginBox{display:none;background:white;border-radius:14px;padding:18px;margin-bottom:18px}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#172554;color:white;padding:12px 18px;border-radius:10px;display:none;max-width:90%;z-index:5}
+.note{font-size:12px;color:#64748b;line-height:1.5}
+@media(max-width:600px){
+ main{padding:12px}
+ header{padding:18px}
+ .cards{grid-template-columns:1fr}
+ .card h2{font-size:22px}
+ .panel{padding:13px}
+}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">Sinif <span>Plus.</span></div>
-  <div class="header-right">
-    <span id="role" style="font-size:12px;color:#d5dcef">Şagird görünüşü</span>
-    <button class="btn login" id="loginBtn" onclick="openLogin()">İdarə panelinə giriş</button>
-    <button class="btn logout" id="logoutBtn" onclick="logout()" hidden>Çıxış</button>
-  </div>
+  <h1>Sinif Plus</h1>
+  <p>Sinifin cərimə və mükafat paneli</p>
 </header>
 
 <main>
-  <h1>Sinif paneli 👋</h1>
-  <div class="muted">Cərimələrə, mükafatlara və şagird sıralamasına bax.</div>
-
-  <div class="stats">
-    <div class="card"><div class="stat-label">ŞAGİRD SAYI</div><div class="stat-value" id="count">0</div></div>
-    <div class="card"><div class="stat-label">ÜMUMİ CƏRİMƏ</div><div class="stat-value red" id="fines">0,00 ₼</div></div>
-    <div class="card"><div class="stat-label">ÜMUMİ MÜKAFAT</div><div class="stat-value green" id="rewards">0,00 ₼</div></div>
-    <div class="card"><div class="stat-label">BALANS FƏRQİ</div><div class="stat-value blue" id="balance">0,00 ₼</div></div>
+  <div class="cards">
+    <div class="card">
+      <small>Ümumi cərimə</small>
+      <h2 class="red" id="totalFine">0,00 ₼</h2>
+    </div>
+    <div class="card">
+      <small>Ümumi mükafat</small>
+      <h2 class="green" id="totalReward">0,00 ₼</h2>
+    </div>
+    <div class="card">
+      <small>Şagird sayı</small>
+      <h2 id="studentCount">0</h2>
+    </div>
   </div>
 
-  <div class="columns">
-    <section class="panel">
-      <div class="panel-head">
-        <div><h2>Şagirdlər</h2><div class="muted" id="tableHint">Şagirdlərin hesablarına baxış</div></div>
-        <button class="btn add" id="addBtn" onclick="openAdd()" hidden>＋ Şagird əlavə et</button>
-      </div>
-      <input class="search" id="search" placeholder="Şagird axtar..." oninput="render()">
-      <div class="tablewrap">
-        <table>
-          <thead><tr><th>ŞAGİRD</th><th>CƏRİMƏ</th><th>MÜKAFAT</th><th id="actionHead" hidden>İDARƏ</th></tr></thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-    </section>
+  <div class="panel">
+    <h2>İdarəetmə</h2>
+    <button class="login" id="loginButton" onclick="showLogin()">Müəllim girişi</button>
+    <button class="del" id="logoutButton" onclick="logout()" style="display:none">Çıxış</button>
+    <span id="roleText" class="note"> Baxış rejimi — dəyişiklik etmək üçün müəllim girişi lazımdır.</span>
 
-    <section class="panel">
-      <h2>🏆 Cərimə sıralaması</h2>
-      <div class="muted">Ən çox cəriməsi olan şagirdlər</div>
-      <div id="ranking"></div>
-    </section>
+    <div id="loginBox">
+      <p><b>Müəllim şifrəsi</b></p>
+      <input id="password" type="password" placeholder="Şifrəni daxil et">
+      <button class="primary" onclick="login()">Daxil ol</button>
+      <button class="del" onclick="hideLogin()">Bağla</button>
+    </div>
   </div>
 
-  <div class="bottom">
-    <section class="panel">
-      <h2>💰 Hesabat</h2>
-      <div class="line"><span>Bir cərimə</span><b>0,60 ₼</b></div>
-      <div class="line"><span>Bir mükafat</span><b>1,00 ₼</b></div>
-      <div class="line"><span>Cərimə əməliyyatları</span><b id="fineCount">0</b></div>
-      <div class="line"><span>Mükafat əməliyyatları</span><b id="rewardCount">0</b></div>
-    </section>
-    <section class="panel">
-      <h2>🕘 Son əməliyyatlar</h2>
-      <div id="recent"></div>
-    </section>
+  <div class="panel" id="addPanel" style="display:none">
+    <h2>Yeni şagird əlavə et</h2>
+    <div class="addrow">
+      <input id="newName" placeholder="Şagirdin adı">
+      <button class="primary" onclick="addStudent()">+ Şagird əlavə et</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Şagirdlər</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Şagird</th>
+            <th>Cərimə</th>
+            <th>Mükafat</th>
+            <th id="actionsHead" style="display:none">İdarəetmə</th>
+          </tr>
+        </thead>
+        <tbody id="studentList"></tbody>
+      </table>
+    </div>
+    <p class="note">Cərimə üçün hər basış 0,60 ₼, mükafat üçün hər basış 1,00 ₼ dəyişiklik edir.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Mükafat və cərimə sıralaması</h2>
+    <div id="ranking"></div>
   </div>
 </main>
-
-<div class="modal" id="loginModal">
-  <div class="dialog">
-    <h2>🔐 İdarəçi girişi</h2>
-    <div class="muted">İdarə panelinə yalnız Mövlan daxil ola bilər.</div>
-    <input type="password" id="password" placeholder="İdarəçi şifrəsi">
-    <div class="error" id="loginError"></div>
-    <div class="dialogbuttons">
-      <button class="btn" style="background:#edf0f6" onclick="closeLogin()">Ləğv et</button>
-      <button class="btn login" onclick="login()">Daxil ol</button>
-    </div>
-  </div>
-</div>
-
-<div class="modal" id="addModal">
-  <div class="dialog">
-    <h2>Yeni şagird</h2>
-    <input id="newName" placeholder="Ad və soyad" maxlength="70">
-    <div class="error" id="addError"></div>
-    <div class="dialogbuttons">
-      <button class="btn" style="background:#edf0f6" onclick="closeAdd()">Ləğv et</button>
-      <button class="btn login" onclick="addStudent()">Əlavə et</button>
-    </div>
-  </div>
-</div>
 
 <div id="toast"></div>
 
 <script>
-/*
-  VACİB:
-  Bu, brauzerdə saxlanan ilkin versiyadır.
-  Aşağıdakı şifrə kodun içində görünür və tam təhlükəsiz deyil.
-  Hamının istifadə edəcəyi sayt üçün server tərəfli giriş sistemi lazımdır.
-*/
 const ADMIN_PASSWORD = "1985";
 const FINE = 60;
 const REWARD = 100;
 const KEY = "sinifplus_v2_data";
 
 let isAdmin = false;
-let data = {students:[],history:[],nextId:1};
+let data = {students:[]};
+
+const defaultStudents = [
+  {id:1,name:"Mövlan",fine:0,reward:0},
+  {id:2,name:"Leyla",fine:0,reward:0}
+];
 
 function load(){
   try{
-    const saved=localStorage.getItem(KEY);
-    if(saved){
-      const d=JSON.parse(saved);
-      if(Array.isArray(d.students)&&Array.isArray(d.history)){
-        data=d;
-        data.nextId=Number(d.nextId)||1;
-        data.students.forEach(s=>{
-          s.fine=Number(s.fine)||0;
-          s.reward=Number(s.reward)||0;
-        });
-      }
-    }
-  }catch(e){console.error(e)}
+    const saved = localStorage.getItem(KEY);
+    data = saved ? JSON.parse(saved) : {students:defaultStudents};
+    if(!data || !Array.isArray(data.students)) data={students:defaultStudents};
+  }catch(e){
+    data={students:defaultStudents};
+  }
+  render();
 }
 
 function save(){
-  try{localStorage.setItem(KEY,JSON.stringify(data))}
-  catch(e){alert("Məlumatı yadda saxlamaq mümkün olmadı.")}
+  localStorage.setItem(KEY,JSON.stringify(data));
 }
 
-function money(n){
-  return (n/100).toLocaleString("az-AZ",{
-    minimumFractionDigits:2,maximumFractionDigits:2
-  })+" ₼";
+function money(cents){
+  return (cents/100).toLocaleString("az-AZ",{minimumFractionDigits:2,maximumFractionDigits:2})+" ₼";
 }
 
-function esc(s){
-  return String(s).replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  }[c]));
-}
-
-function initials(name){
-  return name.trim().split(/\s+/).slice(0,2).map(x=>x[0]||"").join("").toUpperCase();
-}
-
-function notify(msg){
+function notify(message){
   const t=document.getElementById("toast");
-  t.textContent=msg;t.style.display="block";
+  t.textContent=message;
+  t.style.display="block";
   clearTimeout(window.toastTimer);
   window.toastTimer=setTimeout(()=>t.style.display="none",2300);
 }
 
-function openLogin(){
-  document.getElementById("password").value="";
-  document.getElementById("loginError").textContent="";
-  document.getElementById("loginModal").classList.add("show");
-  setTimeout(()=>document.getElementById("password").focus(),50);
+function showLogin(){
+  document.getElementById("loginBox").style.display="block";
+  document.getElementById("password").focus();
 }
-function closeLogin(){
-  document.getElementById("loginModal").classList.remove("show");
+function hideLogin(){
+  document.getElementById("loginBox").style.display="none";
 }
 function login(){
-  const p=document.getElementById("password").value;
-  if(p!==ADMIN_PASSWORD){
-    document.getElementById("loginError").textContent="Şifrə yanlışdır.";
-    return;
+  if(document.getElementById("password").value===ADMIN_PASSWORD){
+    isAdmin=true;
+    hideLogin();
+    document.getElementById("password").value="";
+    render();
+    notify("Müəllim girişi uğurludur.");
+  }else{
+    notify("Şifrə yanlışdır.");
   }
-  isAdmin=true;
-  closeLogin();
-  render();
-  notify("İdarə panelinə daxil oldun.");
 }
 function logout(){
   isAdmin=false;
   render();
-  notify("Şagird görünüşünə keçildi.");
-}
-function openAdd(){
-  if(!isAdmin)return;
-  document.getElementById("newName").value="";
-  document.getElementById("addError").textContent="";
-  document.getElementById("addModal").classList.add("show");
-}
-function closeAdd(){
-  document.getElementById("addModal").classList.remove("show");
-}
-
-function log(s,type,amount){
-  data.history.unshift({
-    name:s.name,type,amount,
-    time:new Date().toLocaleString("az-AZ",{
-      day:"2-digit",month:"2-digit",year:"numeric",
-      hour:"2-digit",minute:"2-digit"
-    })
-  });
-  data.history=data.history.slice(0,300);
+  notify("Baxış rejiminə keçildi.");
 }
 
 function addStudent(){
   if(!isAdmin)return;
   const input=document.getElementById("newName");
   const name=input.value.trim();
-  if(!name){
-    document.getElementById("addError").textContent="Ad və soyadı yaz.";
-    return;
-  }
-  if(data.students.some(s=>s.name.toLocaleLowerCase("az")===name.toLocaleLowerCase("az"))){
-    document.getElementById("addError").textContent="Bu şagird artıq mövcuddur.";
-    return;
-  }
-  const s={id:data.nextId++,name,fine:0,reward:0};
-  data.students.push(s);
-  log(s,"Şagird əlavə edildi",0);
-  save();closeAdd();render();notify("Şagird əlavə edildi.");
+  if(!name){notify("Şagirdin adını yaz.");return;}
+  data.students.push({
+    id:Date.now(),
+    name:name,
+    fine:0,
+    reward:0
+  });
+  input.value="";
+  save();
+  render();
+  notify("Şagird əlavə edildi.");
 }
 
 function changeFine(id,direction){
   if(!isAdmin)return;
   const s=data.students.find(x=>x.id===id);
   if(!s)return;
-  if(direction<0&&s.fine<FINE){
-    notify("Cərimə 0-dan aşağı düşə bilməz.");return;
+  if(direction<0 && s.fine<FINE){
+    notify("Cərimə 0-dan aşağı düşə bilməz.");
+    return;
   }
   s.fine+=direction*FINE;
-  log(s,direction>0?"Cərimə əlavə edildi":"Cərimə azaldıldı",direction*FINE);
-  save();render();
+  save();
+  render();
+  notify(s.name+" üçün cərimə dəyişdirildi.");
 }
-function giveReward(id){
+
+function changeReward(id,direction){
   if(!isAdmin)return;
   const s=data.students.find(x=>x.id===id);
   if(!s)return;
-  s.reward+=REWARD;
-  log(s,"Mükafat verildi",REWARD);
-  save();render();notify(s.name+" üçün 1 manat mükafat verildi.");
+  if(direction<0 && s.reward<REWARD){
+    notify("Mükafat 0-dan aşağı düşə bilməz.");
+    return;
+  }
+  s.reward+=direction*REWARD;
+  save();
+  render();
+  notify(s.name+" üçün mükafat dəyişdirildi.");
 }
+
 function removeStudent(id){
   if(!isAdmin)return;
   const s=data.students.find(x=>x.id===id);
   if(!s)return;
-  if(!confirm(s.name+" adlı şagirdi silmək istəyirsən?"))return;
-  log(s,"Şagird silindi",0);
+  if(!confirm(s.name+" siyahıdan silinsin?"))return;
   data.students=data.students.filter(x=>x.id!==id);
-  save();render();notify("Şagird silindi.");
+  save();
+  render();
+  notify("Şagird silindi.");
 }
 
 function studentRow(s){
-  const isMovlan=s.name.trim().toLocaleLowerCase("az")==="mövlan";
-  const isLeyla=s.name.trim().toLocaleLowerCase("az")==="leyla";
+  let nameHTML=s.name;
+  if(s.name.trim().toLowerCase()==="mövlan"){
+    nameHTML+=' <span class="creator">✦ Saytın yaradıcısı</span>';
+  }
+  if(s.name.trim().toLowerCase()==="leyla"){
+    nameHTML+=' <span class="leyla">●</span>';
+  }
+
   return `<tr>
-    <td><div class="person">
-      <div class="avatar">${esc(initials(s.name))}</div>
-      <div><div class="name">${esc(s.name)} ${isLeyla?'<span title="Cərimə işarəsi" style="color:#e34f63">●</span>':""}</div>
-      ${isMovlan?'<span class="tag creator">✦ Saytın yaradıcısı</span>':""}
-      </div>
-    </div></td>
+    <td><b>${escapeHTML(nameHTML).replace("&lt;span class=&quot;creator&quot;&gt;✦ Saytın yaradıcısı&lt;/span&gt;",'<span class="creator">✦ Saytın yaradıcısı</span>').replace("&lt;span class=&quot;leyla&quot;&gt;●&lt;/span&gt;",'<span class="leyla">●</span>')}</b></td>
     <td class="red"><b>${money(s.fine)}</b></td>
     <td class="green"><b>${money(s.reward)}</b></td>
     ${isAdmin?`<td><div class="actions">
-      <button class="pm minus" title="60 qəpik azalt" onclick="changeFine(${s.id},-1)">−</button>
-      <button class="pm plus" title="60 qəpik artır" onclick="changeFine(${s.id},1)">+</button>
-      <button class="reward" onclick="giveReward(${s.id})">★ +1 ₼</button>
+      <button class="pm minus" title="Cəriməni azalt" onclick="changeFine(${s.id},-1)">−</button>
+      <button class="pm plus" title="Cərimə əlavə et" onclick="changeFine(${s.id},1)">+</button>
+      <button class="pm minus" title="Mükafatı azalt" onclick="changeReward(${s.id},-1)">−</button>
+      <button class="pm plus" title="Mükafat əlavə et" onclick="changeReward(${s.id},1)">+</button>
       <button class="del" onclick="removeStudent(${s.id})">Sil</button>
     </div></td>`:""}
   </tr>`;
 }
 
-function render(){
-  document.getElementById("role").textContent=isAdmin?"Mövlan · İdarəçi":"Şagird görünüşü";
-  document.getElementById("loginBtn").hidden=isAdmin;
-  document.getElementById("logoutBtn").hidden=!isAdmin;
-  document.getElementById("addBtn").hidden=!isAdmin;
-  document.getElementById("actionHead").hidden=!isAdmin;
-  document.getElementById("tableHint").textContent=isAdmin?
-    "Cərimə və mükafatları idarə et.":"Şagirdlərin cərimə və mükafatlarına bax.";
-  const q=document.getElementById("search").value.trim().toLocaleLowerCase("az");
-  const list=data.students.filter(s=>s.name.toLocaleLowerCase("az").includes(q));
-  document.getElementById("rows").innerHTML=list.length?
-    list.map(studentRow).join(""):
-    `<tr><td colspan="${isAdmin?4:3}" class="empty">${data.students.length?"Şagird tapılmadı.":"Hələ şagird əlavə edilməyib."}</td></tr>`;
-
-  const fine=data.students.reduce((a,s)=>a+s.fine,0);
-  const reward=data.students.reduce((a,s)=>a+s.reward,0);
-  document.getElementById("count").textContent=data.students.length;
-  document.getElementById("fines").textContent=money(fine);
-  document.getElementById("rewards").textContent=money(reward);
-  document.getElementById("balance").textContent=money(reward-fine);
-
-  const sorted=[...data.students].sort((a,b)=>b.fine-a.fine);
-  const max=Math.max(1,...sorted.map(s=>s.fine));
-  document.getElementById("ranking").innerHTML=sorted.length?
-    sorted.slice(0,10).map((s,i)=>`
-      <div class="rank">
-        <div class="ranknum">${i+1}</div>
-        <div class="rankbody"><b>${esc(s.name)}</b>
-          <div class="bar"><div class="fill" style="width:${s.fine/max*100}%"></div></div>
-        </div>
-        <b class="red">${money(s.fine)}</b>
-      </div>`).join(""):
-    `<div class="empty">Sıralama hələ boşdur.</div>`;
-
-  document.getElementById("fineCount").textContent=
-    data.history.filter(h=>h.type==="Cərimə əlavə edildi").length;
-  document.getElementById("rewardCount").textContent=
-    data.history.filter(h=>h.type==="Mükafat verildi").length;
-
-  document.getElementById("recent").innerHTML=data.history.length?
-    data.history.slice(0,5).map(h=>`
-      <div class="line"><div><b>${esc(h.name)}</b>
-      <div class="muted" style="margin-top:5px">${esc(h.type)}</div>
-      <div class="muted" style="margin-top:4px">${esc(h.time)}</div></div>
-      <b>${h.amount>0?"+":""}${money(h.amount)}</b></div>`).join(""):
-    `<div class="empty">Əməliyyat yoxdur.</div>`;
+function escapeHTML(str){
+  return String(str).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  }[c]));
 }
 
-document.getElementById("password").addEventListener("keydown",e=>{
-  if(e.key==="Enter")login();
-});
-document.getElementById("newName").addEventListener("keydown",e=>{
-  if(e.key==="Enter")addStudent();
-});
-document.getElementById("loginModal").addEventListener("click",e=>{
-  if(e.target.id==="loginModal")closeLogin();
-});
-document.getElementById("addModal").addEventListener("click",e=>{
-  if(e.target.id==="addModal")closeAdd();
-});
+function render(){
+  document.getElementById("totalFine").textContent=money(
+    data.students.reduce((sum,s)=>sum+s.fine,0)
+  );
+  document.getElementById("totalReward").textContent=money(
+    data.students.reduce((sum,s)=>sum+s.reward,0)
+  );
+  document.getElementById("studentCount").textContent=data.students.length;
+  document.getElementById("studentList").innerHTML=data.students.map(studentRow).join("");
+
+  document.getElementById("loginButton").style.display=isAdmin?"none":"inline-block";
+  document.getElementById("logoutButton").style.display=isAdmin?"inline-block":"none";
+  document.getElementById("addPanel").style.display=isAdmin?"block":"none";
+  document.getElementById("actionsHead").style.display=isAdmin?"table-cell":"none";
+  document.getElementById("roleText").textContent=isAdmin
+    ?" Müəllim rejimi — dəyişiklik etmək mümkündür."
+    :" Baxış rejimi — dəyişiklik etmək üçün müəllim girişi lazımdır.";
+
+  const sorted=[...data.students].sort((a,b)=>(b.reward-b.fine)-(a.reward-a.fine));
+  document.getElementById("ranking").innerHTML=sorted.length
+    ?sorted.map((s,i)=>`<p><b>${i+1}.</b> ${escapeHTML(s.name)} — <span class="green">${money(s.reward)}</span> mükafat, <span class="red">${money(s.fine)}</span> cərimə</p>`).join("")
+    :"<p>Hələ şagird yoxdur.</p>";
+}
 
 load();
-render();
 </script>
 </body>
 </html>
