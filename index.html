@@ -3,270 +3,258 @@
 <html lang="az">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ADDIM KURSU</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#0b1220;color:#edf2ff;font-family:Arial,sans-serif}
 header{background:#111c32;padding:24px 12px;text-align:center;border-bottom:1px solid #263650}
 .logo{font-size:27px;font-weight:800;color:#60a5fa}
-header p{color:#a8b5cc;margin:8px 0 0}
+header p{color:#a8b5cc;margin-bottom:0}
 main{width:min(850px,calc(100% - 24px));margin:24px auto}
 .card{background:#121e33;border:1px solid #263650;border-radius:15px;padding:20px;margin-bottom:16px}
 h2{font-size:21px;margin-top:0}
 .muted{color:#a8b5cc;font-size:14px}
-input,select{width:100%;padding:12px;margin:7px 0 14px;background:#0b1426;border:1px solid #34445f;border-radius:9px;color:white}
+label{display:block;margin:12px 0 6px}
+input,select{width:100%;padding:12px;border:1px solid #34445f;border-radius:9px;background:#0b1426;color:white;margin-bottom:12px}
 button{border:0;border-radius:9px;padding:12px 15px;background:#2563eb;color:white;font-weight:bold;cursor:pointer}
-button:active{transform:scale(.98)}
-button:disabled{opacity:.5}
+button:active{opacity:.75}
+.full{width:100%;margin-top:9px}
 .secondary{background:#263650}
 .green{background:#15803d}
 .red{background:#b91c1c}
-.small{padding:9px 13px}
-.full{width:100%;margin-top:8px}
 .hidden{display:none!important}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .student{padding:15px;margin-top:12px;border-radius:11px;background:#0b1426;border:1px solid #263650}
-.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:12px}
-.count{font-size:16px;font-weight:bold}
-.record{padding:12px;margin-top:9px;border-radius:9px;background:#0b1426;border-left:4px solid #64748b}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.actions button{min-width:48px}
+.record{padding:12px;margin-top:9px;background:#0b1426;border-left:4px solid #64748b;border-radius:8px}
 .reward{border-color:#22c55e}
 .fine{border-color:#ef4444}
+.note{font-size:12px;color:#94a3b8;margin-top:6px}
 .good{color:#4ade80}
 .bad{color:#f87171}
-.note{font-size:12px;color:#94a3b8;margin-top:8px}
-@media(max-width:480px){main{margin:14px auto}.card{padding:15px}.logo{font-size:23px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">ADDIM KURSU</div>
-  <p>Şagirdlərin mükafat və cərimə paneli</p>
+ <div class="logo">ADDIM KURSU</div>
+ <p>Şagirdlərin mükafat və cərimə paneli</p>
 </header>
-
 <main>
-  <section id="home" class="card">
-    <h2>Xoş gəlmisiniz!</h2>
-    <p class="muted">Giriş növünü seçin.</p>
-    <button class="full" onclick="show('teacherLogin')">Müəllim girişi</button>
-    <button class="full secondary" onclick="prepareStudents();show('studentLogin')">Şagird girişi</button>
-  </section>
+ <section id="home" class="card">
+  <h2>Xoş gəlmisiniz!</h2>
+  <p class="muted">Giriş növünü seçin.</p>
+  <button class="full" id="openTeacher">Müəllim girişi</button>
+  <button class="full secondary" id="openStudent">Şagird girişi</button>
+ </section>
 
-  <section id="teacherLogin" class="card hidden">
-    <h2>Müəllim girişi</h2>
-    <label>Şifrə</label>
-    <input id="teacherPass" type="password" placeholder="Şifrəni daxil edin">
-    <button class="full" onclick="teacherLogin()">Daxil ol</button>
-    <button class="full secondary" onclick="show('home')">Geri</button>
-    <p id="teacherError" class="bad"></p>
-  </section>
+ <section id="teacherLogin" class="card hidden">
+  <h2>Müəllim girişi</h2>
+  <label>Şifrə</label>
+  <input id="teacherPassword" type="password" placeholder="Şifrəni daxil edin">
+  <button class="full" id="teacherEnter">Daxil ol</button>
+  <button class="full secondary back">Geri</button>
+  <p id="teacherError" class="bad"></p>
+ </section>
 
-  <section id="studentLogin" class="card hidden">
-    <h2>Şagird girişi</h2>
-    <label>Adınızı seçin</label>
-    <select id="studentChoice"></select>
-    <label>Şəxsi şifrə</label>
-    <input id="studentPass" type="password" placeholder="Şifrəniz">
-    <button class="full" onclick="studentLogin()">Daxil ol</button>
-    <button class="full secondary" onclick="show('home')">Geri</button>
-    <p id="studentError" class="bad"></p>
-  </section>
+ <section id="studentLogin" class="card hidden">
+  <h2>Şagird girişi</h2>
+  <label>Adınızı seçin</label>
+  <select id="studentSelect"></select>
+  <label>Şəxsi şifrə</label>
+  <input id="studentPassword" type="password" placeholder="Şifrəniz">
+  <button class="full" id="studentEnter">Daxil ol</button>
+  <button class="full secondary back">Geri</button>
+  <p id="studentError" class="bad"></p>
+ </section>
 
-  <section id="teacherPanel" class="hidden">
-    <div class="card">
-      <div class="row"><h2>Müəllim paneli</h2><button class="secondary small" onclick="logout()">Çıxış</button></div>
-      <p class="muted">Şagirdləri və onların qeydlərini idarə et.</p>
-    </div>
-    <div class="card">
-      <h2>Şagird əlavə et</h2>
-      <label>Ad və soyad</label>
-      <input id="newName" placeholder="Şagirdin adı">
-      <label>Şagird şifrəsi</label>
-      <input id="newPass" type="password" placeholder="Şəxsi şifrə">
-      <button class="full" onclick="addStudent()">+ Şagird əlavə et</button>
-      <p id="addMsg" class="muted"></p>
-    </div>
-    <div class="card">
-      <h2>Şagirdlər</h2>
-      <div id="studentsList"></div>
-    </div>
-  </section>
+ <section id="teacherPanel" class="hidden">
+  <div class="card">
+   <div class="row"><h2>Müəllim paneli</h2><button class="secondary logout">Çıxış</button></div>
+   <p class="muted">Şagirdləri və qeydləri idarə edin.</p>
+  </div>
+  <div class="card">
+   <h2>Şagird əlavə et</h2>
+   <label>Ad və soyad</label>
+   <input id="newName" placeholder="Şagirdin adı">
+   <label>Şəxsi şifrə</label>
+   <input id="newPassword" type="password" placeholder="Şagirdin şifrəsi">
+   <button class="full" id="addStudent">+ Şagird əlavə et</button>
+   <p id="addMessage" class="muted"></p>
+  </div>
+  <div class="card"><h2>Şagirdlər</h2><div id="studentList"></div></div>
+ </section>
 
-  <section id="studentPanel" class="hidden">
-    <div class="card">
-      <div class="row"><h2 id="welcome"></h2><button class="secondary small" onclick="logout()">Çıxış</button></div>
-      <p class="muted">Mükafat və cərimə qeydlərin</p>
-      <div id="myFine" class="count"></div>
-    </div>
-    <div class="card">
-      <h2>Mənim qeydlərim</h2>
-      <div id="myRecords"></div>
-    </div>
-  </section>
+ <section id="studentPanel" class="hidden">
+  <div class="card">
+   <div class="row"><h2 id="studentName"></h2><button class="secondary logout">Çıxış</button></div>
+   <p id="studentFine" class="muted"></p>
+  </div>
+  <div class="card"><h2>Mükafat və cərimələrim</h2><div id="studentRecords"></div></div>
+ </section>
 </main>
 
 <script>
-const KEY="addim_kursu_data_v2";
+(function(){
+"use strict";
+
+const KEY="addim_kursu_final_v1";
+const $=id=>document.getElementById(id);
+const sections=["home","teacherLogin","studentLogin","teacherPanel","studentPanel"];
 let students=[];
 let currentId=null;
 
 try{
-  const saved=JSON.parse(localStorage.getItem(KEY)||"[]");
-  if(Array.isArray(saved)) students=saved;
+ const data=JSON.parse(localStorage.getItem(KEY)||"[]");
+ if(Array.isArray(data))students=data;
 }catch(e){students=[];}
 
-function save(){
-  localStorage.setItem(KEY,JSON.stringify(students));
-}
+function save(){localStorage.setItem(KEY,JSON.stringify(students));}
 function show(id){
-  ["home","teacherLogin","studentLogin","teacherPanel","studentPanel"]
-  .forEach(x=>document.getElementById(x).classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+ sections.forEach(s=>$(s).classList.add("hidden"));
+ $(id).classList.remove("hidden");
 }
-function esc(s){
-  return String(s).replace(/[&<>"']/g,c=>({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-  })[c]);
+function esc(value){
+ return String(value).replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function refreshSelect(){
+ const select=$("studentSelect");
+ select.innerHTML='<option value="">Şagird seçin</option>';
+ students.forEach(s=>{
+  const opt=document.createElement("option");
+  opt.value=s.id;opt.textContent=s.name;select.appendChild(opt);
+ });
 }
 function teacherLogin(){
-  if(document.getElementById("teacherPass").value==="1985"){
-    renderTeacher();show("teacherPanel");
-  }else{
-    document.getElementById("teacherError").textContent="Şifrə yanlışdır.";
-  }
-}
-function prepareStudents(){
-  const select=document.getElementById("studentChoice");
-  select.innerHTML='<option value="">Şagird seçin</option>';
-  students.forEach(s=>{
-    const o=document.createElement("option");
-    o.value=s.id;o.textContent=s.name;select.appendChild(o);
-  });
+ if($("teacherPassword").value==="1985"){
+  $("teacherError").textContent="";
+  renderTeacher();show("teacherPanel");
+ }else $("teacherError").textContent="Şifrə yanlışdır.";
 }
 function studentLogin(){
-  const id=document.getElementById("studentChoice").value;
-  const pass=document.getElementById("studentPass").value;
-  const s=students.find(x=>x.id===id&&x.password===pass);
-  if(!s){
-    document.getElementById("studentError").textContent="Adı və şifrəni yoxlayın.";
-    return;
-  }
-  currentId=s.id;renderMyRecords();show("studentPanel");
+ const id=$("studentSelect").value;
+ const password=$("studentPassword").value;
+ const s=students.find(x=>x.id===id&&x.password===password);
+ if(!s){$("studentError").textContent="Adı və şifrəni yoxlayın.";return;}
+ currentId=s.id;
+ renderStudent();show("studentPanel");
 }
 function addStudent(){
-  const name=document.getElementById("newName").value.trim();
-  const password=document.getElementById("newPass").value.trim();
-  if(!name||!password){alert("Adı və şifrəni yaz.");return;}
-  if(students.some(s=>s.name.toLowerCase()===name.toLowerCase())){
-    alert("Bu adda şagird artıq var.");return;
-  }
-  students.push({
-    id:Date.now().toString()+Math.random().toString(36).slice(2),
-    name,password,fine:0,records:[]
-  });
-  save();
-  document.getElementById("newName").value="";
-  document.getElementById("newPass").value="";
-  document.getElementById("addMsg").textContent="Şagird əlavə edildi.";
-  renderTeacher();
+ const name=$("newName").value.trim();
+ const password=$("newPassword").value.trim();
+ if(!name||!password){$("addMessage").textContent="Ad və şifrəni daxil edin.";return;}
+ if(students.some(s=>s.name.toLowerCase()===name.toLowerCase())){
+  $("addMessage").textContent="Bu adda şagird artıq var.";return;
+ }
+ students.push({
+  id:Date.now().toString()+Math.random().toString(36).slice(2),
+  name,password,fine:0,records:[]
+ });
+ save();
+ $("newName").value="";$("newPassword").value="";
+ $("addMessage").textContent="Şagird əlavə edildi.";
+ renderTeacher();
 }
-function changeFine(id,amount){
-  const s=students.find(x=>x.id===id);
-  if(!s)return;
-  s.fine=Math.max(0,(Number(s.fine)||0)+amount);
-  s.records=s.records||[];
-  s.records.unshift({
-    id:Date.now().toString()+Math.random().toString(36).slice(2),
-    type:"fine",
-    text:amount>0?"Cərimə +60":"Cərimə −60",
-    date:new Date().toLocaleDateString("az-AZ")
-  });
-  save();renderTeacher();
-  if(currentId===id)renderMyRecords();
+function addFine(id,amount){
+ const s=students.find(x=>x.id===id);if(!s)return;
+ s.fine=Math.max(0,(Number(s.fine)||0)+amount);
+ s.records.unshift({
+  id:Date.now().toString()+Math.random().toString(36).slice(2),
+  type:"fine",text:amount>0?"Cərimə +60":"Cərimə −60",
+  date:new Date().toLocaleDateString("az-AZ"),amount
+ });
+ save();renderTeacher();
+ if(currentId===id)renderStudent();
 }
 function addReward(id){
-  const s=students.find(x=>x.id===id);
-  if(!s)return;
-  s.records=s.records||[];
-  s.records.unshift({
-    id:Date.now().toString()+Math.random().toString(36).slice(2),
-    type:"reward",text:"1 manat mükafat",
-    date:new Date().toLocaleDateString("az-AZ")
-  });
-  save();renderTeacher();
-  if(currentId===id)renderMyRecords();
+ const s=students.find(x=>x.id===id);if(!s)return;
+ s.records.unshift({
+  id:Date.now().toString()+Math.random().toString(36).slice(2),
+  type:"reward",text:"1 manat mükafat",
+  date:new Date().toLocaleDateString("az-AZ")
+ });
+ save();renderTeacher();
+ if(currentId===id)renderStudent();
 }
-function deleteRecord(sid,rid){
-  if(!confirm("Bu qeydi silmək istəyirsən?"))return;
-  const s=students.find(x=>x.id===sid);
-  if(!s)return;
-  const r=s.records.find(x=>x.id===rid);
-  if(r&&r.type==="fine"){
-    if(r.text==="Cərimə +60")s.fine=Math.max(0,s.fine-60);
-    if(r.text==="Cərimə −60")s.fine+=60;
-  }
-  s.records=s.records.filter(x=>x.id!==rid);
-  save();renderTeacher();
-  if(currentId===sid)renderMyRecords();
+function removeRecord(sid,rid){
+ if(!confirm("Bu qeydi silmək istəyirsiniz?"))return;
+ const s=students.find(x=>x.id===sid);if(!s)return;
+ const record=s.records.find(r=>r.id===rid);
+ if(record&&record.type==="fine"){
+  s.fine=Math.max(0,(Number(s.fine)||0)-(Number(record.amount)||0));
+ }
+ s.records=s.records.filter(r=>r.id!==rid);
+ save();renderTeacher();
+ if(currentId===sid)renderStudent();
 }
-function deleteStudent(id){
-  if(!confirm("Şagirdi və bütün qeydlərini silmək istəyirsən?"))return;
-  students=students.filter(s=>s.id!==id);
-  save();renderTeacher();prepareStudents();
+function removeStudent(id){
+ if(!confirm("Bu şagirdi və qeydlərini silmək istəyirsiniz?"))return;
+ students=students.filter(s=>s.id!==id);
+ save();renderTeacher();refreshSelect();
 }
 function renderTeacher(){
-  const list=document.getElementById("studentsList");
-  if(!students.length){
-    list.innerHTML='<p class="muted">Hələ şagird yoxdur.</p>';prepareStudents();return;
-  }
-  list.innerHTML=students.map(s=>`
-    <div class="student">
-      <div class="row">
-        <strong>${esc(s.name)}</strong>
-        <button class="red small" onclick="deleteStudent('${s.id}')">Sil</button>
-      </div>
-      <p class="count">Cərimə: ${Number(s.fine)||0}</p>
-      <div class="actions">
-        <button class="green" aria-label="Cəriməni artır" onclick="changeFine('${s.id}',60)">+</button>
-        <button class="red" aria-label="Cəriməni azalt" onclick="changeFine('${s.id}',-60)">−</button>
-        <button class="secondary" onclick="addReward('${s.id}')">+1 manat</button>
-      </div>
-      ${(s.records||[]).map(r=>`
-        <div class="record ${r.type==="reward"?"reward":"fine"}">
-          <div class="row">
-            <span>${esc(r.text)}</span>
-            <button class="secondary small" onclick="deleteRecord('${s.id}','${r.id}')">Sil</button>
-          </div>
-          <div class="note">${esc(r.date)}</div>
-        </div>
-      `).join("")}
-    </div>
-  `).join("");
-  prepareStudents();
+ $("studentList").innerHTML=students.length?students.map(s=>`
+  <div class="student">
+   <div class="row"><strong>${esc(s.name)}</strong>
+   <button class="red" data-action="delete-student" data-id="${s.id}">Şagirdi sil</button></div>
+   <p class="muted">Cərimə: <strong>${Number(s.fine)||0}</strong></p>
+   <div class="actions">
+    <button class="green" data-action="plus" data-id="${s.id}">+</button>
+    <button class="red" data-action="minus" data-id="${s.id}">−</button>
+    <button class="secondary" data-action="reward" data-id="${s.id}">+1 manat</button>
+   </div>
+   ${(s.records||[]).map(r=>`
+    <div class="record ${r.type==="reward"?"reward":"fine"}">
+     <div class="row"><span>${esc(r.text)}</span>
+     <button class="secondary" data-action="delete-record" data-id="${s.id}" data-record="${r.id}">Sil</button></div>
+     <div class="note">${esc(r.date)}</div>
+    </div>`).join("")}
+  </div>`).join(""):'<p class="muted">Hələ şagird əlavə edilməyib.</p>';
+ refreshSelect();
 }
-function renderMyRecords(){
-  const s=students.find(x=>x.id===currentId);
-  if(!s){logout();return;}
-  document.getElementById("welcome").textContent=s.name;
-  document.getElementById("myFine").textContent="Cərimə: "+(Number(s.fine)||0);
-  const records=s.records||[];
-  document.getElementById("myRecords").innerHTML=records.length?
-    records.map(r=>`
-      <div class="record ${r.type==="reward"?"reward":"fine"}">
-        <strong>${esc(r.text)}</strong>
-        <div class="note">${esc(r.date)}</div>
-      </div>
-    `).join(""):'<p class="muted">Hələ qeyd yoxdur.</p>';
+function renderStudent(){
+ const s=students.find(x=>x.id===currentId);
+ if(!s){logout();return;}
+ $("studentName").textContent=s.name;
+ $("studentFine").textContent="Cərimə: "+(Number(s.fine)||0);
+ $("studentRecords").innerHTML=s.records.length?s.records.map(r=>`
+  <div class="record ${r.type==="reward"?"reward":"fine"}">
+   <strong>${esc(r.text)}</strong><div class="note">${esc(r.date)}</div>
+  </div>`).join(""):'<p class="muted">Hələ qeyd yoxdur.</p>';
 }
 function logout(){
-  currentId=null;
-  document.getElementById("teacherPass").value="";
-  document.getElementById("studentPass").value="";
-  document.getElementById("teacherError").textContent="";
-  document.getElementById("studentError").textContent="";
-  show("home");
+ currentId=null;
+ $("teacherPassword").value="";
+ $("studentPassword").value="";
+ $("teacherError").textContent="";
+ $("studentError").textContent="";
+ show("home");
 }
+$("openTeacher").addEventListener("click",()=>show("teacherLogin"));
+$("openStudent").addEventListener("click",()=>{refreshSelect();show("studentLogin");});
+$("teacherEnter").addEventListener("click",teacherLogin);
+$("studentEnter").addEventListener("click",studentLogin);
+$("addStudent").addEventListener("click",addStudent);
+document.querySelectorAll(".back").forEach(b=>b.addEventListener("click",()=>show("home")));
+document.querySelectorAll(".logout").forEach(b=>b.addEventListener("click",logout));
+
+$("studentList").addEventListener("click",e=>{
+ const b=e.target.closest("button[data-action]");if(!b)return;
+ const id=b.dataset.id;
+ switch(b.dataset.action){
+  case "plus":addFine(id,60);break;
+  case "minus":addFine(id,-60);break;
+  case "reward":addReward(id);break;
+  case "delete-student":removeStudent(id);break;
+  case "delete-record":removeRecord(id,b.dataset.record);break;
+ }
+});
+
 renderTeacher();
+})();
 </script>
 </body>
 </html>
